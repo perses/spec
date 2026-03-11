@@ -23,6 +23,7 @@ package dashboard
 
 import (
 	"github.com/perses/spec/cue/common"
+	"github.com/perses/spec/cue/datasource"
 )
 
 #Panel: {
@@ -32,7 +33,7 @@ import (
 #Spec: {
 	display?: common.#Display @go(Display)
 	datasources?: {
-		[string]: #DatasourceSpec @go(Datasources)
+		[string]: datasource.#Spec @go(Datasources)
 	}
 	variables?: [...#Variable] @go(Variables,[]Variable)
 	panels: {
