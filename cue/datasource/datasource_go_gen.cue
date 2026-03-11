@@ -12,5 +12,5 @@ import "github.com/perses/spec/cue/common"
 
 	// Plugin will contain the datasource configuration.
 	// The data typed is available in Cue.
-	plugine: common.#Plugin @go(Plugin)
+	plugin: common.#Plugin @go(Plugin)
 }
