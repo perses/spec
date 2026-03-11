@@ -24,6 +24,11 @@ go-test:
 	@echo ">> Run all go tests"
 	$(GO) test -count=1 -v ./...
 
+.PHONY: cue-eval
+cue-eval:
+	@echo ">> Validate CUE schemas"
+	cd cue && $(CUE) eval ./...
+
 .PHONY: cue-gen
 cue-gen:
 	@echo ">> Generate CUE definitions from golang datamodel"
