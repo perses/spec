@@ -16,7 +16,6 @@ package common
 import (
 	"fmt"
 	"regexp"
-	"time"
 )
 
 var idRegexp = regexp.MustCompile("^[a-zA-Z0-9_.-]+$")
@@ -50,18 +49,5 @@ func ValidateDescription(description string) error {
 		return fmt.Errorf("%q is not a correct description. It should match the regexp: %s", description, idRegexp.String())
 	}
 
-	return nil
-}
-
-// ValidateTimezone checks for the forbidden timezone
-func ValidateTimezone(timezone string) error {
-	if timezone == "" || timezone == "local" {
-		return nil
-	}
-
-	_, err := time.LoadLocation(timezone)
-	if err != nil {
-		return fmt.Errorf("%q is not a valid timezone: %w", timezone, err)
-	}
 	return nil
 }

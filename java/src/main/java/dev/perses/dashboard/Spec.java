@@ -46,6 +46,9 @@ public class Spec {
     @JsonProperty("refreshInterval")
     public Duration refreshInterval;
 
+    @JsonProperty("timezone")
+    public String timezone;
+
     @JsonProperty("links")
     public List<Link> Links;
 

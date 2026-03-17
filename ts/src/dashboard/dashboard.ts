@@ -26,6 +26,7 @@ export interface DashboardSpec {
   variables: VariableDefinition[];
   layouts: LayoutDefinition[];
   panels: Record<string, PanelDefinition>;
+  timezone?: string;
   links?: Link[];
 }
 

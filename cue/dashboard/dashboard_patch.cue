@@ -42,5 +42,6 @@ import (
 	layouts: [...#Layout] @go(Layouts,[]Layout)
 	duration:         common.#DurationString | *"1h" @go(Duration)
 	refreshInterval?: common.#DurationString         @go(RefreshInterval)
+	timezone?:        string                         @go(Timezone)
 	links?: [...#Link] @go(Links,[]Link)
 }
