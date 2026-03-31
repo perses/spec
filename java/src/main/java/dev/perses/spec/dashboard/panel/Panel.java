@@ -11,25 +11,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package dev.perses.common;
+package dev.perses.spec.dashboard.panel;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.List;
-
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class JSONRef {
-    @JsonProperty("$ref")
-    public String ref;
+public class Panel {
+    @JsonProperty(value = "kind", required = true)
+    public String kind;
 
-    @JsonIgnore
-    public List<String> path;
+    @JsonProperty(value = "spec", required = true)
+    public PanelSpec spec;
 
-    @JsonIgnore
-    public Object object;
-
-    public JSONRef() {
+    public Panel() {
     }
 }

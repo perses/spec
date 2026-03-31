@@ -11,15 +11,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package dev.perses.dashboard;
+package dev.perses.spec.dashboard;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import dev.perses.common.duration.Duration;
-import dev.perses.dashboard.panel.Link;
-import dev.perses.dashboard.panel.Panel;
-import dev.perses.dashboard.annotation.AnnotationSpec;
-import dev.perses.common.Display;
+import dev.perses.spec.common.duration.Duration;
+import dev.perses.spec.dashboard.panel.Link;
+import dev.perses.spec.dashboard.panel.Panel;
+import dev.perses.spec.dashboard.annotation.AnnotationSpec;
+import dev.perses.spec.common.Display;
 
 import java.util.List;
 import java.util.Map;
@@ -30,7 +30,7 @@ public class Spec {
     public Display display;
 
     @JsonProperty("datasources")
-    public Map<String, dev.perses.datasource.Spec> datasources;
+    public Map<String, dev.perses.spec.datasource.Spec> datasources;
 
     @JsonProperty("variables")
     public List<Variable> variables;

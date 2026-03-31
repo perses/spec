@@ -11,26 +11,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package dev.perses.dashboard.annotation;
+package dev.perses.spec.dashboard.panel;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class AnnotationDisplay {
-    @JsonProperty(value = "name", required = true)
+public class Link {
+    @JsonProperty("name")
     public String name;
 
-    @JsonProperty("description")
-    public String description;
+    @JsonProperty(value = "url", required = true)
+    public String url;
 
-    @JsonProperty("hidden")
-    public Boolean hidden;
+    @JsonProperty("tooltip")
+    public String tooltip;
 
-    @JsonProperty("color")
-    public String color;
+    @JsonProperty("renderVariables")
+    public Boolean renderVariables;
 
-    public AnnotationDisplay() {
+    @JsonProperty("targetBlank")
+    public Boolean targetBlank;
+
+    public Link() {
     }
 }
-

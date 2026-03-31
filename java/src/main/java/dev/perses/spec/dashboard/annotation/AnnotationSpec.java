@@ -11,19 +11,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package dev.perses.dashboard.panel;
+package dev.perses.spec.dashboard.annotation;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import dev.perses.common.Plugin;
+import dev.perses.spec.common.Plugin;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class QuerySpec {
-    @JsonProperty("name")
-    public String name;
+public class AnnotationSpec {
+    @JsonProperty(value = "display", required = true)
+    public AnnotationDisplay display;
+
     @JsonProperty(value = "plugin", required = true)
     public Plugin plugin;
 
-    public QuerySpec() {
+    public AnnotationSpec() {
     }
 }
+

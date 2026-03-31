@@ -11,28 +11,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package dev.perses.dashboard.panel;
+package dev.perses.spec.dashboard.panel;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import dev.perses.common.Plugin;
-
-import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class PanelSpec {
-    @JsonProperty(value = "display", required = true)
-    public PanelDisplay display;
+public class PanelDisplay {
+    @JsonProperty(value = "name", required = true)
+    public String name;
 
-    @JsonProperty(value = "plugin", required = true)
-    public Plugin plugin;
+    @JsonProperty("description")
+    public String description;
 
-    @JsonProperty("queries")
-    public List<Query> queries;
-
-    @JsonProperty("links")
-    public List<Link> links;
-
-    public PanelSpec() {
+    public PanelDisplay() {
     }
 }

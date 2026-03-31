@@ -11,7 +11,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package dev.perses.dashboard;
+package dev.perses.spec.dashboard;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -33,7 +33,7 @@ public class SpecUnmarshalTest {
 
     @Test
     public void testUnmarshalFullDashboard() throws Exception {
-        String json = readResource("/dev/perses/dashboard/simple_spec_dashboard.json");
+        String json = readResource("/dev/perses/spec/dashboard/simple_spec_dashboard.json");
 
         Spec d = mapper.readValue(json, Spec.class);
         assertNotNull(d);

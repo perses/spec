@@ -11,19 +11,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package dev.perses.dashboard;
+package dev.perses.spec.common;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.List;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Variable {
-    @JsonProperty(value = "kind", required = true)
-    public String kind;
+public class JSONRef {
+    @JsonProperty("$ref")
+    public String ref;
 
-    @JsonProperty("spec")
-    public Object spec;
+    @JsonIgnore
+    public List<String> path;
 
-    public Variable() {
+    @JsonIgnore
+    public Object object;
+
+    public JSONRef() {
     }
 }

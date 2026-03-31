@@ -11,12 +11,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package dev.perses.datasource;
+package dev.perses.spec.datasource;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import dev.perses.common.Display;
-import dev.perses.common.Plugin;
+import dev.perses.spec.common.Display;
+import dev.perses.spec.common.Plugin;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Spec {

@@ -11,11 +11,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package dev.perses.dashboard;
+package dev.perses.spec.dashboard;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import dev.perses.common.JSONRef;
+import dev.perses.spec.common.JSONRef;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Layout {

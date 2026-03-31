@@ -11,19 +11,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package dev.perses.common;
+package dev.perses.spec.dashboard.panel;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Plugin {
+public class Query {
     @JsonProperty(value = "kind", required = true)
     public String kind;
 
-    @JsonProperty("spec")
-    public Object spec;
+    @JsonProperty(value = "spec", required = true)
+    public QuerySpec spec;
 
-    public Plugin() {
+    public Query() {
     }
 }
