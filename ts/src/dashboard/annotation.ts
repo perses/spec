@@ -25,10 +25,6 @@ export interface AnnotationSpec<PluginSpec = UnknownSpec> {
   plugin: Definition<PluginSpec>;
 }
 
-export interface AnnotationDefinition<PluginSpec = UnknownSpec> extends Definition<AnnotationSpec<PluginSpec>> {
-  kind: 'Annotation';
-}
-
 export interface AnnotationData {
   start: number;
   end?: number;
