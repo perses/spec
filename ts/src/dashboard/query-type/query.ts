@@ -16,6 +16,8 @@ import { TimeSeriesData } from './time-series-data';
 import { TraceData } from './trace-data';
 import { LogData } from './log-data';
 import { ProfileData } from './profile-data';
+import { AlertsData } from './alerts-data';
+import { SilencesData } from './silences-data';
 
 interface QuerySpec<PluginSpec> {
   name?: string;
@@ -39,8 +41,8 @@ export interface QueryType {
   TraceQuery: TraceData;
   ProfileQuery: ProfileData;
   LogQuery: LogData;
-  // in the future we can add other query plugin and data types
-  // for example: we can add something like `LogsQuery: LogsData;`
+  AlertsQuery: AlertsData;
+  SilencesQuery: SilencesData;
 }
 
 /**
@@ -48,7 +50,9 @@ export interface QueryType {
  * @param type
  */
 export function isValidQueryPluginType(type: string): type is QueryPluginType {
-  return ['TimeSeriesQuery', 'TraceQuery', 'ProfileQuery'].includes(type as QueryPluginType);
+  return ['TimeSeriesQuery', 'TraceQuery', 'ProfileQuery', 'LogQuery', 'AlertsQuery', 'SilencesQuery'].includes(
+    type as QueryPluginType
+  );
 }
 
 /**
