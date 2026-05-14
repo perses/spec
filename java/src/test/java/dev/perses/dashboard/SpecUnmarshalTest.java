@@ -32,6 +32,20 @@ public class SpecUnmarshalTest {
     }
 
     @Test
+    public void testUnmarshalTabsLayout() throws Exception {
+        String json = readResource("/dev/perses/dashboard/simple_tabs_dashboard.json");
+
+        Spec d = mapper.readValue(json, Spec.class);
+        assertNotNull(d);
+        assertEquals("Tabs Dashboard", d.display.name);
+        assertEquals(1, d.layouts.size());
+
+        Layout layout = d.layouts.get(0);
+        assertEquals(Layout.LayoutKind.Tabs, layout.kind);
+        assertNotNull(layout.spec);
+    }
+
+    @Test
     public void testUnmarshalFullDashboard() throws Exception {
         String json = readResource("/dev/perses/dashboard/simple_spec_dashboard.json");
 

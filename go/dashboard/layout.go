@@ -25,10 +25,12 @@ type LayoutKind string
 
 const (
 	KindGridLayout LayoutKind = "Grid"
+	KindTabLayout  LayoutKind = "Tabs"
 )
 
 var layoutKindMap = map[LayoutKind]bool{
 	KindGridLayout: true,
+	KindTabLayout:  true,
 }
 
 func (k *LayoutKind) UnmarshalJSON(data []byte) error {
@@ -92,6 +94,28 @@ type GridLayoutSpec struct {
 	RepeatVariable string             `json:"repeatVariable,omitempty" yaml:"repeatVariable,omitempty"`
 }
 
+type TabItem struct {
+	// Display name of the tab shown in the tab bar.
+	Name string `json:"name" yaml:"name"`
+	// The grid layout items within this tab.
+	Items []GridItem `json:"items" yaml:"items"`
+}
+
+type TabLayoutDisplay struct {
+	Title string `json:"title" yaml:"title"`
+	// If Collapse is defined, the tab group will be rendered in a collapsible container.
+	// If not defined, the tab group will be rendered expanded without the ability to collapse it.
+	Collapse *GridLayoutCollapse `json:"collapse,omitempty" yaml:"collapse,omitempty"`
+}
+
+type TabLayoutSpec struct {
+	Display *TabLayoutDisplay `json:"display,omitempty" yaml:"display,omitempty"`
+	// Ordered list of tabs. The first tab (or defaultTab index) is shown by default.
+	Tabs []TabItem `json:"tabs" yaml:"tabs"`
+	// Zero-based index of the tab to show by default. Defaults to 0.
+	DefaultTab int `json:"defaultTab,omitempty" yaml:"defaultTab,omitempty"`
+}
+
 type LayoutSpec any
 
 type tmpDashboardLayout struct {
@@ -136,6 +160,8 @@ func (d *Layout) unmarshal(unmarshal func(any) error, staticMarshal func(any) ([
 	switch tmpLayout.Kind {
 	case KindGridLayout:
 		spec = &GridLayoutSpec{}
+	case KindTabLayout:
+		spec = &TabLayoutSpec{}
 	}
 	if err := staticUnmarshal(rawParameter, spec); err != nil {
 		return err

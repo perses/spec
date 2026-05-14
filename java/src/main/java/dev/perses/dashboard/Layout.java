@@ -17,15 +17,17 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import dev.perses.common.JSONRef;
 
+import java.util.List;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Layout {
-    public enum LayoutKind {Grid}
+    public enum LayoutKind {Grid, Tabs}
 
     @JsonProperty(value = "kind", required = true)
     public LayoutKind kind;
 
     @JsonProperty("spec")
-    public Object spec; // GridLayoutSpec when kind == Grid
+    public Object spec; // GridLayoutSpec when kind == Grid, TabLayoutSpec when kind == Tabs
 
     public static class GridItem {
         @JsonProperty("x")
@@ -56,9 +58,32 @@ public class Layout {
         @JsonProperty("display")
         public GridLayoutDisplay display;
         @JsonProperty(value = "items", required = true)
-        public java.util.List<GridItem> items;
+        public List<GridItem> items;
         @JsonProperty("repeatVariable")
         public String repeatVariable;
+    }
+
+    public static class TabItem {
+        @JsonProperty(value = "name", required = true)
+        public String name;
+        @JsonProperty(value = "items", required = true)
+        public List<GridItem> items;
+    }
+
+    public static class TabLayoutDisplay {
+        @JsonProperty("title")
+        public String title;
+        @JsonProperty("collapse")
+        public GridLayoutCollapse collapse;
+    }
+
+    public static class TabLayoutSpec {
+        @JsonProperty("display")
+        public TabLayoutDisplay display;
+        @JsonProperty(value = "tabs", required = true)
+        public List<TabItem> tabs;
+        @JsonProperty("defaultTab")
+        public Integer defaultTab;
     }
 
     public Layout() {

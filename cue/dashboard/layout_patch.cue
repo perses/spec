@@ -23,7 +23,7 @@ package dashboard
 
 #LayoutKind: #enumLayoutKind
 
-#LayoutSpec: #GridLayoutSpec
+#LayoutSpec: #GridLayoutSpec | #TabLayoutSpec
 
 #Layout: {
 	kind: #LayoutKind @go(Kind)

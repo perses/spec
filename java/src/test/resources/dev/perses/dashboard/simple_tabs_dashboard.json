@@ -1,0 +1,45 @@
+{
+  "display": {
+    "name": "Tabs Dashboard",
+    "description": "Dashboard with tabs"
+  },
+  "datasources": {},
+  "variables": [],
+  "panels": {},
+  "layouts": [
+    {
+      "kind": "Tabs",
+      "spec": {
+        "display": {
+          "title": "My Tabs",
+          "collapse": {
+            "open": true
+          }
+        },
+        "tabs": [
+          {
+            "name": "Overview",
+            "items": [
+              {
+                "x": 0,
+                "y": 0,
+                "width": 12,
+                "height": 4,
+                "content": {
+                  "$ref": "#/spec/panels/cpu"
+                }
+              }
+            ]
+          },
+          {
+            "name": "Details",
+            "items": []
+          }
+        ],
+        "defaultTab": 0
+      }
+    }
+  ],
+  "duration": null,
+  "refreshInterval": null
+}
