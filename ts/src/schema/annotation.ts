@@ -12,7 +12,7 @@
 // limitations under the License.
 
 import { z } from 'zod';
-import { AnnotationDefinition, AnnotationDisplay, AnnotationSpec } from '../dashboard';
+import { AnnotationDisplay, AnnotationSpec } from '../dashboard';
 import { PluginSchema, pluginSchema } from './plugin';
 
 export const annotationDisplaySchema: z.ZodSchema<AnnotationDisplay> = z.object({
@@ -33,15 +33,3 @@ export const annotationSpecSchema = z.object({
   display: annotationDisplaySchema,
   plugin: pluginSchema,
 });
-
-export const annotationDefinitionSchema: z.ZodSchema<AnnotationDefinition> = z.object({
-  kind: z.literal('Annotation'),
-  spec: annotationSpecSchema,
-});
-
-export function buildAnnotationDefinitionSchema(pluginSchema: PluginSchema): z.ZodSchema<AnnotationDefinition> {
-  return z.object({
-    kind: z.literal('Annotation'),
-    spec: buildAnnotationSpecSchema(pluginSchema),
-  });
-}

@@ -13,7 +13,7 @@
 
 import { PanelRef } from './panel';
 
-export type LayoutDefinition = GridDefinition;
+export type LayoutDefinition = GridDefinition | TabDefinition;
 
 export interface GridDefinition {
   kind: 'Grid';
@@ -35,4 +35,23 @@ export interface GridItemDefinition {
   width: number;
   height: number;
   content: PanelRef;
+}
+
+export interface TabDefinition {
+  kind: 'Tabs';
+  spec: {
+    display?: {
+      title: string;
+      collapse?: {
+        open: boolean;
+      };
+    };
+    tabs: TabItemDefinition[];
+    defaultTab?: number;
+  };
+}
+
+export interface TabItemDefinition {
+  name: string;
+  items: GridItemDefinition[];
 }

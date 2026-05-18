@@ -35,8 +35,30 @@ type Plugin struct {
 	Spec any `json:"spec" yaml:"spec"`
 }
 
-func (p Plugin) JSONMarshal() ([]byte, error) {
-	return json.Marshal(p)
+func (p Plugin) MarshalJSON() ([]byte, error) {
+	// We are overidding the type here to avoid an infite loop in the marshaling process.
+	// The loop would happen if we return p without casting the type into plain.
+	type plain Plugin
+	// This will ensure the spec of the plugin is never equal to nil.
+	// Cuelang does not accept the value `null` for a struct.
+	// Since Cuelang is validating the plugin, we need to ensure that the struct is matching the type requirement.
+	if p.Spec == nil {
+		p.Spec = map[string]any{}
+	}
+	return json.Marshal((plain)(p))
+}
+
+func (p Plugin) MarshalYAML() (interface{}, error) {
+	// We are overidding the type here to avoid an infite loop in the marshaling process.
+	// The loop would happen if we return p without casting the type into plain.
+	type plain Plugin
+	// This will ensure the spec of the plugin is never equal to nil.
+	// Cuelang does not accept the value `null` for a struct.
+	// Since Cuelang is validating the plugin, we need to ensure that the struct is matching the type requirement.
+	if p.Spec == nil {
+		p.Spec = map[string]any{}
+	}
+	return (plain)(p), nil
 }
 
 func (p *Plugin) UnmarshalJSON(data []byte) error {

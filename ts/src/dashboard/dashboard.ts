@@ -17,12 +17,12 @@ import { LayoutDefinition } from './layout';
 import { VariableDefinition } from './variable';
 import { Link } from './link';
 import { PanelDefinition } from './panel';
-import { AnnotationDefinition } from './annotation';
+import { AnnotationSpec } from './annotation';
 
 export interface DashboardSpec {
   display?: Display;
   datasources?: Record<string, DatasourceSpec>;
-  annotations?: AnnotationDefinition[];
+  annotations?: AnnotationSpec[];
   duration: DurationString;
   refreshInterval?: DurationString;
   variables: VariableDefinition[];

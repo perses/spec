@@ -9,9 +9,11 @@ import "github.com/perses/spec/cue/common"
 #LayoutKind: _ // #enumLayoutKind
 
 #enumLayoutKind:
-	#KindGridLayout
+	#KindGridLayout |
+	#KindTabLayout
 
 #KindGridLayout: #LayoutKind & "Grid"
+#KindTabLayout:  #LayoutKind & "Tabs"
 
 #GridItem: {
 	x:        int                    @go(X)
@@ -37,6 +39,32 @@ import "github.com/perses/spec/cue/common"
 	display?: null | #GridLayoutDisplay @go(Display,*GridLayoutDisplay)
 	items: [...#GridItem] @go(Items,[]GridItem)
 	repeatVariable?: string @go(RepeatVariable)
+}
+
+#TabItem: {
+	// Display name of the tab shown in the tab bar.
+	name: string @go(Name)
+
+	// The grid layout items within this tab.
+	items: [...#GridItem] @go(Items,[]GridItem)
+}
+
+#TabLayoutDisplay: {
+	title: string @go(Title)
+
+	// If Collapse is defined, the tab group will be rendered in a collapsible container.
+	// If not defined, the tab group will be rendered expanded without the ability to collapse it.
+	collapse?: null | #GridLayoutCollapse @go(Collapse,*GridLayoutCollapse)
+}
+
+#TabLayoutSpec: {
+	display?: null | #TabLayoutDisplay @go(Display,*TabLayoutDisplay)
+
+	// Ordered list of tabs. The first tab (or defaultTab index) is shown by default.
+	tabs: [...#TabItem] @go(Tabs,[]TabItem)
+
+	// Zero-based index of the tab to show by default. Defaults to 0.
+	defaultTab?: int @go(DefaultTab)
 }
 
 #LayoutSpec: _
