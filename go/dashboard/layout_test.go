@@ -22,8 +22,94 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-func TestUnmarshalJSONLayout(t *testing.T) {
+func TestRepeatVariableAlignmentUnmarshalJSON(t *testing.T) {
 	testSuite := []struct {
+		title       string
+		jason       string
+		result      RepeatVariableAlignment
+		expectError bool
+	}{
+		{
+			title:  "valid horizontal",
+			jason:  `"horizontal"`,
+			result: RepeatVariableAlignmentHorizontal,
+		},
+		{
+			title:  "valid vertical",
+			jason:  `"vertical"`,
+			result: RepeatVariableAlignmentVertical,
+		},
+		{
+			title:       "empty string is rejected",
+			jason:       `""`,
+			expectError: true,
+		},
+		{
+			title:       "unknown value is rejected",
+			jason:       `"diagonal"`,
+			expectError: true,
+		},
+	}
+	for _, test := range testSuite {
+		t.Run(test.title, func(t *testing.T) {
+			var result RepeatVariableAlignment
+			err := json.Unmarshal([]byte(test.jason), &result)
+			if test.expectError {
+				assert.Error(t, err)
+				assert.Contains(t, err.Error(), "unknown repeatVariable.alignment")
+			} else {
+				assert.NoError(t, err)
+				assert.Equal(t, test.result, result)
+			}
+		})
+	}
+}
+
+func TestRepeatVariableAlignmentUnmarshalYAML(t *testing.T) {
+	testSuite := []struct {
+		title       string
+		yamele      string
+		result      RepeatVariableAlignment
+		expectError bool
+	}{
+		{
+			title:  "valid horizontal",
+			yamele: `horizontal`,
+			result: RepeatVariableAlignmentHorizontal,
+		},
+		{
+			title:  "valid vertical",
+			yamele: `vertical`,
+			result: RepeatVariableAlignmentVertical,
+		},
+		{
+			title:       "empty string is rejected",
+			yamele:      `""`,
+			expectError: true,
+		},
+		{
+			title:       "unknown value is rejected",
+			yamele:      `diagonal`,
+			expectError: true,
+		},
+	}
+	for _, test := range testSuite {
+		t.Run(test.title, func(t *testing.T) {
+			var result RepeatVariableAlignment
+			err := yaml.Unmarshal([]byte(test.yamele), &result)
+			if test.expectError {
+				assert.Error(t, err)
+				assert.Contains(t, err.Error(), "unknown repeatVariable.alignment")
+			} else {
+				assert.NoError(t, err)
+				assert.Equal(t, test.result, result)
+			}
+		})
+	}
+}
+
+func TestUnmarshalJSONLayout(t *testing.T) {
+	validTestSuite := []struct {
 		title  string
 		jason  string
 		result Layout
@@ -310,18 +396,137 @@ func TestUnmarshalJSONLayout(t *testing.T) {
 				},
 			},
 		},
+		{
+			title: "grid item with repeat variable (value only)",
+			jason: `
+{
+  "kind": "Grid",
+  "spec": {
+    "items": [
+      {
+        "x": 0,
+        "y": 0,
+        "width": 12,
+        "height": 4,
+        "content": { "$ref": "#/panels/panel1" },
+        "repeatVariable": { "value": "env" }
+      }
+    ]
+  }
+}
+`,
+			result: Layout{
+				Kind: KindGridLayout,
+				Spec: &GridLayoutSpec{
+					Items: []GridItem{
+						{
+							X:      0,
+							Y:      0,
+							Width:  12,
+							Height: 4,
+							Content: &common.JSONRef{
+								Ref:  "#/panels/panel1",
+								Path: []string{"panels", "panel1"},
+							},
+							RepeatVariable: &RepeatVariable{
+								Value: "env",
+							},
+						},
+					},
+				},
+			},
+		},
+		{
+			title: "grid item with repeat variable (all fields)",
+			jason: `
+{
+  "kind": "Grid",
+  "spec": {
+    "items": [
+      {
+        "x": 0,
+        "y": 0,
+        "width": 12,
+        "height": 4,
+        "content": { "$ref": "#/panels/panel1" },
+        "repeatVariable": { "value": "env", "alignment": "vertical", "maxPer": 2 }
+      }
+    ]
+  }
+}
+`,
+			result: Layout{
+				Kind: KindGridLayout,
+				Spec: &GridLayoutSpec{
+					Items: []GridItem{
+						{
+							X:      0,
+							Y:      0,
+							Width:  12,
+							Height: 4,
+							Content: &common.JSONRef{
+								Ref:  "#/panels/panel1",
+								Path: []string{"panels", "panel1"},
+							},
+							RepeatVariable: &RepeatVariable{
+								Value:     "env",
+								Alignment: RepeatVariableAlignmentVertical,
+								MaxPer:    func() *int { v := 2; return &v }(),
+							},
+						},
+					},
+				},
+			},
+		},
 	}
-	for _, test := range testSuite {
+	for _, test := range validTestSuite {
 		t.Run(test.title, func(t *testing.T) {
 			result := Layout{}
 			assert.NoError(t, json.Unmarshal([]byte(test.jason), &result))
 			assert.Equal(t, test.result, result)
 		})
 	}
+
+	errorTestSuite := []struct {
+		title    string
+		jason    string
+		errorMsg string
+	}{
+		{
+			title:    "unknown layout kind",
+			jason:    `{"kind": "Unknown", "spec": {"items": []}}`,
+			errorMsg: "unknown layout.kind",
+		},
+		{
+			title: "unknown repeatVariable alignment",
+			jason: `
+			{
+			  "kind": "Grid",
+			  "spec": {
+				"items": [
+				  {
+					"x": 0, "y": 0, "width": 12, "height": 4,
+					"content": { "$ref": "#/panels/p1" },
+					"repeatVariable": { "value": "env", "alignment": "diagonal" }
+				  }
+				]
+			  }
+			}`,
+			errorMsg: "unknown repeatVariable.alignment",
+		},
+	}
+	for _, test := range errorTestSuite {
+		t.Run(test.title, func(t *testing.T) {
+			result := Layout{}
+			err := json.Unmarshal([]byte(test.jason), &result)
+			assert.Error(t, err)
+			assert.Contains(t, err.Error(), test.errorMsg)
+		})
+	}
 }
 
 func TestUnmarshalYAMLLayout(t *testing.T) {
-	testSuite := []struct {
+	validTestSuite := []struct {
 		title  string
 		yamele string
 		result Layout
@@ -564,12 +769,126 @@ spec:
 				},
 			},
 		},
+		{
+			title: "grid item with repeat variable (value only)",
+			yamele: `
+kind: "Grid"
+spec:
+  items:
+  - x: 0
+    y: 0
+    width: 12
+    height: 4
+    content:
+      $ref: "#/panels/panel1"
+    repeatVariable:
+      value: env
+`,
+			result: Layout{
+				Kind: KindGridLayout,
+				Spec: &GridLayoutSpec{
+					Items: []GridItem{
+						{
+							X:      0,
+							Y:      0,
+							Width:  12,
+							Height: 4,
+							Content: &common.JSONRef{
+								Ref:  "#/panels/panel1",
+								Path: []string{"panels", "panel1"},
+							},
+							RepeatVariable: &RepeatVariable{
+								Value: "env",
+							},
+						},
+					},
+				},
+			},
+		},
+		{
+			title: "grid item with repeat variable (all fields)",
+			yamele: `
+kind: "Grid"
+spec:
+  items:
+  - x: 0
+    y: 0
+    width: 12
+    height: 4
+    content:
+      $ref: "#/panels/panel1"
+    repeatVariable:
+      value: env
+      alignment: vertical
+      maxPer: 2
+`,
+			result: Layout{
+				Kind: KindGridLayout,
+				Spec: &GridLayoutSpec{
+					Items: []GridItem{
+						{
+							X:      0,
+							Y:      0,
+							Width:  12,
+							Height: 4,
+							Content: &common.JSONRef{
+								Ref:  "#/panels/panel1",
+								Path: []string{"panels", "panel1"},
+							},
+							RepeatVariable: &RepeatVariable{
+								Value:     "env",
+								Alignment: RepeatVariableAlignmentVertical,
+								MaxPer:    func() *int { v := 2; return &v }(),
+							},
+						},
+					},
+				},
+			},
+		},
 	}
-	for _, test := range testSuite {
+	for _, test := range validTestSuite {
 		t.Run(test.title, func(t *testing.T) {
 			result := Layout{}
 			assert.NoError(t, yaml.Unmarshal([]byte(test.yamele), &result))
 			assert.Equal(t, test.result, result)
+		})
+	}
+
+	errorTestSuite := []struct {
+		title    string
+		yamele   string
+		errorMsg string
+	}{
+		{
+			title:    "unknown layout kind",
+			yamele:   "kind: Unknown\nspec:\n  items: []\n",
+			errorMsg: "unknown layout.kind",
+		},
+		{
+			title: "unknown repeatVariable alignment",
+			yamele: `
+kind: "Grid"
+spec:
+  items:
+  - x: 0
+    y: 0
+    width: 12
+    height: 4
+    content:
+      $ref: "#/panels/p1"
+    repeatVariable:
+      value: env
+      alignment: diagonal
+`,
+			errorMsg: "unknown repeatVariable.alignment",
+		},
+	}
+	for _, test := range errorTestSuite {
+		t.Run(test.title, func(t *testing.T) {
+			result := Layout{}
+			err := yaml.Unmarshal([]byte(test.yamele), &result)
+			assert.Error(t, err)
+			assert.Contains(t, err.Error(), test.errorMsg)
 		})
 	}
 }

@@ -14,10 +14,13 @@
 package dev.perses.spec.dashboard;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import org.junit.jupiter.api.Test;
 
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -43,6 +46,49 @@ public class SpecUnmarshalTest {
         Layout layout = d.layouts.get(0);
         assertEquals(Layout.LayoutKind.Tabs, layout.kind);
         assertNotNull(layout.spec);
+    }
+
+    @Test
+    public void testUnmarshalRepeatVariable() throws Exception {
+        String json = readResource("/dev/perses/spec/dashboard/repeat_variable_dashboard.json");
+
+        Spec d = mapper.readValue(json, Spec.class);
+        assertNotNull(d);
+        assertEquals("Repeat Variable Dashboard", d.display.name);
+        assertEquals(1, d.layouts.size());
+
+        Layout layout = d.layouts.getFirst();
+        assertEquals(Layout.LayoutKind.Grid, layout.kind);
+
+        @SuppressWarnings("unchecked")
+        Map<String, Object> spec = (Map<String, Object>) layout.spec;
+        assertNotNull(spec);
+
+        @SuppressWarnings("unchecked")
+        List<Map<String, Object>> items =
+                (List<Map<String, Object>>) spec.get("items");
+        assertEquals(1, items.size());
+
+        @SuppressWarnings("unchecked")
+        Map<String, Object> rv = (Map<String, Object>) items.getFirst().get("repeatVariable");
+        assertNotNull(rv);
+        assertEquals("env", rv.get("value"));
+        assertEquals(3, rv.get("maxPer"));
+        assertEquals("horizontal", rv.get("alignment"));
+    }
+
+    @Test
+    public void testUnmarshalRepeatVariableInvalidAlignmentIsRejected() {
+        String json = """
+                {
+                  "value": "env",
+                  "alignment": "diagonal"
+                }
+                """;
+
+        assertThrows(InvalidFormatException.class,
+                () -> mapper.readValue(json, Layout.RepeatVariable.class),
+                "Expected InvalidFormatException for unknown alignment value");
     }
 
     @Test

@@ -64,14 +64,28 @@ export function buildPanelDefinitionSchema(pluginSchema: PluginSchema): z.ZodSch
   });
 }
 
+export const repeatVariableSchema = z.object({
+  value: z.string().min(1),
+  maxPer: z.number().int('Provide valid number.').positive().optional(),
+  alignment: z.enum(['horizontal', 'vertical']).optional(),
+});
+
+export const layoutDefinitionSchema = z.object({
+  repeatVariable: repeatVariableSchema.optional(),
+  width: z.number().int().positive(),
+  height: z.number().int().positive(),
+});
+
 export const panelEditorSchema: z.ZodSchema<PanelEditorValues> = z.object({
   groupId: z.number(),
   panelDefinition: panelDefinitionSchema,
+  layoutDefinition: layoutDefinitionSchema.optional(),
 });
 
 export function buildPanelEditorSchema(pluginSchema: PluginSchema): z.ZodSchema<PanelEditorValues> {
   return z.object({
     groupId: z.number(),
     panelDefinition: buildPanelDefinitionSchema(pluginSchema),
+    layoutDefinition: layoutDefinitionSchema.optional(),
   });
 }

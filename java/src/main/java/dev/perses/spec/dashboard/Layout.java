@@ -29,6 +29,22 @@ public class Layout {
     @JsonProperty("spec")
     public Object spec; // GridLayoutSpec when kind == Grid, TabLayoutSpec when kind == Tabs
 
+    public enum RepeatVariableAlignment {
+        @JsonProperty("horizontal")
+        horizontal,
+        @JsonProperty("vertical")
+        vertical
+    }
+
+    public static class RepeatVariable {
+        @JsonProperty(value = "value", required = true)
+        public String value;
+        @JsonProperty("maxPer")
+        public Integer maxPer;
+        @JsonProperty("alignment")
+        public RepeatVariableAlignment alignment;
+    }
+
     public static class GridItem {
         @JsonProperty("x")
         public int x;
@@ -40,6 +56,8 @@ public class Layout {
         public int height;
         @JsonProperty("content")
         public JSONRef content;
+        @JsonProperty("repeatVariable")
+        public RepeatVariable repeatVariable;
     }
 
     public static class GridLayoutCollapse {

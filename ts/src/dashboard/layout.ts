@@ -29,12 +29,19 @@ export interface GridDefinition {
   };
 }
 
+export interface RepeatVariable {
+  value: string;
+  maxPer?: number;
+  alignment?: 'horizontal' | 'vertical';
+}
+
 export interface GridItemDefinition {
   x: number;
   y: number;
   width: number;
   height: number;
   content: PanelRef;
+  repeatVariable?: RepeatVariable;
 }
 
 export interface TabDefinition {

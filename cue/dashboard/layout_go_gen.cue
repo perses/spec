@@ -15,12 +15,28 @@ import "github.com/perses/spec/cue/common"
 #KindGridLayout: #LayoutKind & "Grid"
 #KindTabLayout:  #LayoutKind & "Tabs"
 
+#RepeatVariableAlignment: _ // #enumRepeatVariableAlignment
+
+#enumRepeatVariableAlignment:
+	#RepeatVariableAlignmentHorizontal |
+	#RepeatVariableAlignmentVertical
+
+#RepeatVariableAlignmentHorizontal: #RepeatVariableAlignment & "horizontal"
+#RepeatVariableAlignmentVertical:   #RepeatVariableAlignment & "vertical"
+
+#RepeatVariable: {
+	value:      string                   @go(Value)
+	maxPer?:    null | int               @go(MaxPer,*int)
+	alignment?: #RepeatVariableAlignment @go(Alignment)
+}
+
 #GridItem: {
-	x:        int                    @go(X)
-	y:        int                    @go(Y)
-	width:    int                    @go(Width)
-	height:   int                    @go(Height)
-	content?: null | common.#JSONRef @go(Content,*common.JSONRef)
+	x:               int                    @go(X)
+	y:               int                    @go(Y)
+	width:           int                    @go(Width)
+	height:          int                    @go(Height)
+	content?:        null | common.#JSONRef @go(Content,*common.JSONRef)
+	repeatVariable?: null | #RepeatVariable @go(RepeatVariable,*RepeatVariable)
 }
 
 #GridLayoutCollapse: {

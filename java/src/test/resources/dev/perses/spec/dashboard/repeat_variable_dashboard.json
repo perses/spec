@@ -1,0 +1,29 @@
+{
+  "display": {
+    "name": "Repeat Variable Dashboard"
+  },
+  "panels": {},
+  "layouts": [
+    {
+      "kind": "Grid",
+      "spec": {
+        "items": [
+          {
+            "x": 0,
+            "y": 0,
+            "width": 12,
+            "height": 6,
+            "content": { "$ref": "#/spec/panels/panel1" },
+            "repeatVariable": {
+              "value": "env",
+              "maxPer": 3,
+              "alignment": "horizontal"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "duration": null
+}
+

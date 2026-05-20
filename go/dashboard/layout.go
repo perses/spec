@@ -69,12 +69,64 @@ func (k *LayoutKind) validate() error {
 	return nil
 }
 
+type RepeatVariableAlignment string
+
+const (
+	RepeatVariableAlignmentHorizontal RepeatVariableAlignment = "horizontal"
+	RepeatVariableAlignmentVertical   RepeatVariableAlignment = "vertical"
+)
+
+var repeatVariableAlignmentMap = map[RepeatVariableAlignment]bool{
+	RepeatVariableAlignmentHorizontal: true,
+	RepeatVariableAlignmentVertical:   true,
+}
+
+func (a *RepeatVariableAlignment) UnmarshalJSON(data []byte) error {
+	var tmp RepeatVariableAlignment
+	type plain RepeatVariableAlignment
+	if err := json.Unmarshal(data, (*plain)(&tmp)); err != nil {
+		return err
+	}
+	if err := (&tmp).validate(); err != nil {
+		return err
+	}
+	*a = tmp
+	return nil
+}
+
+func (a *RepeatVariableAlignment) UnmarshalYAML(unmarshal func(any) error) error {
+	var tmp RepeatVariableAlignment
+	type plain RepeatVariableAlignment
+	if err := unmarshal((*plain)(&tmp)); err != nil {
+		return err
+	}
+	if err := (&tmp).validate(); err != nil {
+		return err
+	}
+	*a = tmp
+	return nil
+}
+
+func (a *RepeatVariableAlignment) validate() error {
+	if _, ok := repeatVariableAlignmentMap[*a]; !ok {
+		return fmt.Errorf("unknown repeatVariable.alignment %q used", *a)
+	}
+	return nil
+}
+
+type RepeatVariable struct {
+	Value     string                  `json:"value" yaml:"value"`
+	MaxPer    *int                    `json:"maxPer,omitempty" yaml:"maxPer,omitempty"`
+	Alignment RepeatVariableAlignment `json:"alignment,omitempty" yaml:"alignment,omitempty"`
+}
+
 type GridItem struct {
-	X       int             `json:"x" yaml:"x"`
-	Y       int             `json:"y" yaml:"y"`
-	Width   int             `json:"width" yaml:"width"`
-	Height  int             `json:"height" yaml:"height"`
-	Content *common.JSONRef `json:"content" yaml:"content"`
+	X              int             `json:"x" yaml:"x"`
+	Y              int             `json:"y" yaml:"y"`
+	Width          int             `json:"width" yaml:"width"`
+	Height         int             `json:"height" yaml:"height"`
+	Content        *common.JSONRef `json:"content" yaml:"content"`
+	RepeatVariable *RepeatVariable `json:"repeatVariable,omitempty" yaml:"repeatVariable,omitempty"`
 }
 
 type GridLayoutCollapse struct {
