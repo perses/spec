@@ -25,6 +25,14 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
+    <developers>
+        <developer>
+            <id>ahusson</id>
+            <name>Augustin Husson</name>
+            <organization>Perses</organization>
+            <organizationUrl>https://perses.dev</organizationUrl>
+        </developer>
+    </developers>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
