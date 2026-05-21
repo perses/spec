@@ -12,3 +12,5 @@
 // limitations under the License.
 
 export * from './datasource';
+export * from './proxy/http';
+export * from './proxy/sql';

@@ -176,7 +176,7 @@ func (s *Config) verifySupportedDriver() error {
 		}
 	}
 
-	// Varify if the driver is still empty
+	// Verify if the driver is still empty
 	if s.Driver == "" {
 		return errors.New("driver is required")
 	}
