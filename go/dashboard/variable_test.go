@@ -18,7 +18,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/perses/spec/go/common"
+	"github.com/perses/spec/go/dashboard/plugin"
 	"github.com/perses/spec/go/dashboard/variable"
 	"github.com/stretchr/testify/assert"
 	"gopkg.in/yaml.v3"
@@ -78,7 +78,7 @@ func TestUnmarshalJSONVariable(t *testing.T) {
 							Name:   "my awesome variable",
 							Hidden: false,
 						},
-						Plugin: common.Plugin{
+						Plugin: plugin.Plugin{
 							Kind: "PrometheusLabelNamesVariable",
 							Spec: map[string]any{},
 						},
@@ -116,7 +116,7 @@ func TestUnmarshalJSONVariable(t *testing.T) {
 							Name:   "my awesome variable",
 							Hidden: false,
 						},
-						Plugin: common.Plugin{
+						Plugin: plugin.Plugin{
 							Kind: "PrometheusLabelNamesVariable",
 							Spec: map[string]any{
 								"matchers": []any{"up"},
@@ -158,7 +158,7 @@ func TestUnmarshalJSONVariable(t *testing.T) {
 							Name:   "my awesome variable",
 							Hidden: true,
 						},
-						Plugin: common.Plugin{
+						Plugin: plugin.Plugin{
 							Kind: "PrometheusLabelValuesVariable",
 							Spec: map[string]any{
 								"labelName": "instance",
@@ -202,7 +202,7 @@ func TestUnmarshalJSONVariable(t *testing.T) {
 							Hidden: false,
 						},
 						DefaultValue: &variable.DefaultValue{SingleValue: "default"},
-						Plugin: common.Plugin{
+						Plugin: plugin.Plugin{
 							Kind: "PrometheusLabelValuesVariable",
 							Spec: map[string]any{
 								"labelName": "instance",
@@ -248,7 +248,7 @@ func TestUnmarshalJSONVariable(t *testing.T) {
 						},
 						AllowMultiple: true,
 						DefaultValue:  &variable.DefaultValue{SliceValues: []string{"default1", "default2"}},
-						Plugin: common.Plugin{
+						Plugin: plugin.Plugin{
 							Kind: "PrometheusLabelValuesVariable",
 							Spec: map[string]any{
 								"labelName": "instance",
@@ -315,7 +315,7 @@ spec:
 							Name:   "my awesome variable",
 							Hidden: false,
 						},
-						Plugin: common.Plugin{
+						Plugin: plugin.Plugin{
 							Kind: "PrometheusLabelNamesVariable",
 						},
 					},
@@ -345,7 +345,7 @@ spec:
 							Name:   "my awesome variable",
 							Hidden: false,
 						},
-						Plugin: common.Plugin{
+						Plugin: plugin.Plugin{
 							Kind: "PrometheusLabelNamesVariable",
 							Spec: map[string]any{
 								"matchers": []any{"up"},
@@ -380,7 +380,7 @@ spec:
 							Name:   "my awesome variable",
 							Hidden: true,
 						},
-						Plugin: common.Plugin{
+						Plugin: plugin.Plugin{
 							Kind: "PrometheusLabelValuesVariable",
 							Spec: map[string]any{
 								"labelName": "instance",
@@ -417,7 +417,7 @@ spec:
 							Hidden: false,
 						},
 						DefaultValue: &variable.DefaultValue{SingleValue: "default"},
-						Plugin: common.Plugin{
+						Plugin: plugin.Plugin{
 							Kind: "PrometheusLabelValuesVariable",
 							Spec: map[string]any{
 								"labelName": "instance",
@@ -458,7 +458,7 @@ spec:
 						},
 						AllowMultiple: true,
 						DefaultValue:  &variable.DefaultValue{SliceValues: []string{"default1", "default2"}},
-						Plugin: common.Plugin{
+						Plugin: plugin.Plugin{
 							Kind: "PrometheusLabelValuesVariable",
 							Spec: map[string]any{
 								"labelName": "instance",
@@ -576,7 +576,7 @@ func TestMarshalListVariable(t *testing.T) {
 							Name:   "my awesome variable",
 							Hidden: false,
 						},
-						Plugin: common.Plugin{
+						Plugin: plugin.Plugin{
 							Kind: "PrometheusLabelNamesVariable",
 							Spec: map[string]any{},
 						},
@@ -611,7 +611,7 @@ func TestMarshalListVariable(t *testing.T) {
 							Name:   "my awesome variable",
 							Hidden: false,
 						},
-						Plugin: common.Plugin{
+						Plugin: plugin.Plugin{
 							Kind: "PrometheusLabelNamesVariable",
 							Spec: map[string]any{
 								"matchers": []any{"up"},
@@ -652,7 +652,7 @@ func TestMarshalListVariable(t *testing.T) {
 							Name:   "my awesome variable",
 							Hidden: false,
 						},
-						Plugin: common.Plugin{
+						Plugin: plugin.Plugin{
 							Kind: "PrometheusLabelValuesVariable",
 							Spec: map[string]any{
 								"labelName": "instance",
@@ -696,7 +696,7 @@ func TestMarshalListVariable(t *testing.T) {
 							Hidden: false,
 						},
 						DefaultValue: &variable.DefaultValue{SingleValue: "default"},
-						Plugin: common.Plugin{
+						Plugin: plugin.Plugin{
 							Kind: "PrometheusLabelValuesVariable",
 							Spec: map[string]any{
 								"labelName": "instance",
@@ -742,7 +742,7 @@ func TestMarshalListVariable(t *testing.T) {
 						},
 						AllowMultiple: true,
 						DefaultValue:  &variable.DefaultValue{SliceValues: []string{"default1", "default2"}},
-						Plugin: common.Plugin{
+						Plugin: plugin.Plugin{
 							Kind: "PrometheusLabelValuesVariable",
 							Spec: map[string]any{
 								"labelName": "instance",

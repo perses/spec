@@ -11,17 +11,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package common
+package plugin
 
 import (
 	"encoding/json"
 	"fmt"
 )
 
-type PluginMetadata struct {
+const (
+	LatestVersion   = "latest"
+	DefaultRegistry = "perses.dev"
+)
+
+type Metadata struct {
 	// Version is optional. If not provided, it means the latest version available in the Perses instance.
+	// Version needs to follow the semantic versioning format (e.g., "1.0.0" or "v1.0.0")
 	Version string `json:"version,omitempty" yaml:"version,omitempty"`
-	// Registry is optional. If not provided, it means the default registry: "perses.dev".
+	// Registry is optional. If not provided, it means the default registry is: "perses.dev".
 	Registry string `json:"registry,omitempty" yaml:"registry,omitempty"`
 }
 
@@ -29,7 +35,7 @@ type Plugin struct {
 	// Kind is the type of the plugin (e.g., Panel, Variable, Datasource, etc.).
 	Kind string `json:"kind" yaml:"kind"`
 	// Metadata is an optional field that contains additional information such as version and registry of the plugin.
-	Metadata *PluginMetadata `json:"metadata,omitempty" yaml:"metadata,omitempty"`
+	Metadata *Metadata `json:"metadata,omitempty" yaml:"metadata,omitempty"`
 	// +kubebuilder:pruning:PreserveUnknownFields
 	// +kubebuilder:validation:Schemaless
 	Spec any `json:"spec" yaml:"spec"`

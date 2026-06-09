@@ -4,7 +4,7 @@
 
 package dashboard
 
-import "github.com/perses/spec/cue/common"
+import plugin_9 "github.com/perses/spec/cue/dashboard/plugin"
 
 #Link: {
 	name?:            string @go(Name)
@@ -21,7 +21,7 @@ import "github.com/perses/spec/cue/common"
 
 #PanelSpec: {
 	display?: null | #PanelDisplay @go(Display,*PanelDisplay)
-	plugin:   common.#Plugin       @go(Plugin)
+	plugin:   plugin_9.#Plugin     @go(Plugin)
 	queries?: [...#Query] @go(Queries,[]Query)
 	links?: [...#Link] @go(Links,[]Link)
 }
@@ -37,8 +37,8 @@ import "github.com/perses/spec/cue/common"
 }
 
 #QuerySpec: {
-	name?:  string         @go(Name)
-	plugin: common.#Plugin @go(Plugin)
+	name?:  string           @go(Name)
+	plugin: plugin_9.#Plugin @go(Plugin)
 }
 
 #Spec: _

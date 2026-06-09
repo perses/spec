@@ -19,10 +19,10 @@
 // any type that defines a custom UnmarshallJSON or UnmarshallYAML.
 // For more info see https://github.com/cue-lang/cue/issues/2466.
 
-package common
+package plugin
 
 #Plugin: {
-	kind:      string          @go(Kind)
-	metadata?: #PluginMetadata @go(PluginMetadata)
-	spec:      _               @go(Spec)
+	kind:      string    @go(Kind)
+	metadata?: #Metadata @go(Metadata)
+	spec:      _         @go(Spec)
 }

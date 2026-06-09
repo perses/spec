@@ -17,7 +17,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/perses/spec/go/common"
+	"github.com/perses/spec/go/dashboard/plugin"
 )
 
 type DefaultValue struct {
@@ -138,7 +138,7 @@ type ListSpec struct {
 	CapturingRegexp string `json:"capturingRegexp,omitempty" yaml:"capturingRegexp,omitempty"`
 	// Sort method to apply when rendering the list of values
 	Sort   *Sort         `json:"sort,omitempty" yaml:"sort,omitempty"`
-	Plugin common.Plugin `json:"plugin" yaml:"plugin"`
+	Plugin plugin.Plugin `json:"plugin" yaml:"plugin"`
 }
 
 func (v *ListSpec) Validate() error {

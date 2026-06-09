@@ -11,17 +11,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package datasource
+package module
 
-import (
-	"github.com/perses/spec/go/common"
-	"github.com/perses/spec/go/dashboard/plugin"
-)
+#Plugin: {
+	kind: #enumKind @go(Kind)
+	spec: #PluginSpec @go(PluginSpec)
+}
 
-type Spec struct {
-	Display *common.Display `json:"display,omitempty" yaml:"display,omitempty"`
-	Default bool            `json:"default" yaml:"default"`
-	// Plugin will contain the datasource configuration.
-	// The data typed is available in Cue.
-	Plugin plugin.Plugin `json:"plugin" yaml:"plugin"`
+#Module: {
+	metadata?: #Metadata @go(Metadata)
+	schemasPath: string @go(SchemasPath)
+	plugins:   [#Plugin] @go(Plugins)
 }

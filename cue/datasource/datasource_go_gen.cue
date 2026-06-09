@@ -4,7 +4,10 @@
 
 package datasource
 
-import "github.com/perses/spec/cue/common"
+import (
+	"github.com/perses/spec/cue/common"
+	plugin_9 "github.com/perses/spec/cue/dashboard/plugin"
+)
 
 #Spec: {
 	display?: null | common.#Display @go(Display,*common.Display)
@@ -12,5 +15,5 @@ import "github.com/perses/spec/cue/common"
 
 	// Plugin will contain the datasource configuration.
 	// The data typed is available in Cue.
-	plugin: common.#Plugin @go(Plugin)
+	plugin: plugin_9.#Plugin @go(Plugin)
 }

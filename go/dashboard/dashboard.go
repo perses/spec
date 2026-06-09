@@ -19,6 +19,7 @@ import (
 	"time"
 
 	"github.com/perses/spec/go/common"
+	"github.com/perses/spec/go/dashboard/plugin"
 	"github.com/perses/spec/go/datasource"
 )
 
@@ -37,7 +38,7 @@ type PanelDisplay struct {
 
 type PanelSpec struct {
 	Display *PanelDisplay `json:"display,omitempty" yaml:"display,omitempty"`
-	Plugin  common.Plugin `json:"plugin" yaml:"plugin"`
+	Plugin  plugin.Plugin `json:"plugin" yaml:"plugin"`
 	Queries []Query       `json:"queries,omitempty" yaml:"queries,omitempty"`
 	Links   []Link        `json:"links,omitempty" yaml:"links,omitempty"`
 }
@@ -54,7 +55,7 @@ type Query struct {
 
 type QuerySpec struct {
 	Name   string        `json:"name,omitempty" yaml:"name,omitempty"`
-	Plugin common.Plugin `json:"plugin" yaml:"plugin"`
+	Plugin plugin.Plugin `json:"plugin" yaml:"plugin"`
 }
 
 type Spec struct {

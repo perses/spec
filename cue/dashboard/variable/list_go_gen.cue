@@ -4,7 +4,7 @@
 
 package variable
 
-import "github.com/perses/spec/cue/common"
+import plugin_9 "github.com/perses/spec/cue/dashboard/plugin"
 
 #DefaultValue: _
 
@@ -47,6 +47,6 @@ import "github.com/perses/spec/cue/common"
 	capturingRegexp?: string @go(CapturingRegexp)
 
 	// Sort method to apply when rendering the list of values
-	sort?:  null | #Sort   @go(Sort,*Sort)
-	plugin: common.#Plugin @go(Plugin)
+	sort?:  null | #Sort     @go(Sort,*Sort)
+	plugin: plugin_9.#Plugin @go(Plugin)
 }

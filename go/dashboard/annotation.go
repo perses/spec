@@ -17,7 +17,7 @@ import (
 	"encoding/json"
 	"errors"
 
-	"github.com/perses/spec/go/common"
+	"github.com/perses/spec/go/dashboard/plugin"
 )
 
 type AnnotationDisplay struct {
@@ -29,7 +29,7 @@ type AnnotationDisplay struct {
 
 type AnnotationSpec struct {
 	Display AnnotationDisplay `json:"display" yaml:"display"`
-	Plugin  common.Plugin     `json:"plugin" yaml:"plugin"`
+	Plugin  plugin.Plugin     `json:"plugin" yaml:"plugin"`
 }
 
 func (d *AnnotationSpec) UnmarshalJSON(data []byte) error {

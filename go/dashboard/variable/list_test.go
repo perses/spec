@@ -16,7 +16,7 @@ package variable
 import (
 	"testing"
 
-	"github.com/perses/spec/go/common"
+	"github.com/perses/spec/go/dashboard/plugin"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -37,7 +37,7 @@ func TestListSpec_Validate(t *testing.T) {
 					SingleValue: "value1",
 				},
 				AllowMultiple: false,
-				Plugin: common.Plugin{
+				Plugin: plugin.Plugin{
 					Kind: "TestPlugin",
 				},
 			},
@@ -52,7 +52,7 @@ func TestListSpec_Validate(t *testing.T) {
 					SliceValues: []string{"value1", "value2"},
 				},
 				AllowMultiple: true,
-				Plugin: common.Plugin{
+				Plugin: plugin.Plugin{
 					Kind: "TestPlugin",
 				},
 			},
@@ -67,7 +67,7 @@ func TestListSpec_Validate(t *testing.T) {
 					SliceValues: []string{"single_value"},
 				},
 				AllowMultiple: false,
-				Plugin: common.Plugin{
+				Plugin: plugin.Plugin{
 					Kind: "TestPlugin",
 				},
 			},
@@ -82,7 +82,7 @@ func TestListSpec_Validate(t *testing.T) {
 					SliceValues: []string{"value1", "value2"},
 				},
 				AllowMultiple: false,
-				Plugin: common.Plugin{
+				Plugin: plugin.Plugin{
 					Kind: "TestPlugin",
 				},
 			},
@@ -94,7 +94,7 @@ func TestListSpec_Validate(t *testing.T) {
 			spec: &ListSpec{
 				CustomAllValue: "custom_all",
 				AllowAllValue:  false,
-				Plugin: common.Plugin{
+				Plugin: plugin.Plugin{
 					Kind: "TestPlugin",
 				},
 			},
@@ -106,7 +106,7 @@ func TestListSpec_Validate(t *testing.T) {
 			spec: &ListSpec{
 				CustomAllValue: "custom_all",
 				AllowAllValue:  true,
-				Plugin: common.Plugin{
+				Plugin: plugin.Plugin{
 					Kind: "TestPlugin",
 				},
 			},
@@ -116,7 +116,7 @@ func TestListSpec_Validate(t *testing.T) {
 			title: "valid spec with no default value",
 			spec: &ListSpec{
 				AllowMultiple: true,
-				Plugin: common.Plugin{
+				Plugin: plugin.Plugin{
 					Kind: "TestPlugin",
 				},
 			},
@@ -129,7 +129,7 @@ func TestListSpec_Validate(t *testing.T) {
 					SliceValues: []string{},
 				},
 				AllowMultiple: false,
-				Plugin: common.Plugin{
+				Plugin: plugin.Plugin{
 					Kind: "TestPlugin",
 				},
 			},
