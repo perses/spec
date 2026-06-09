@@ -18,8 +18,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/perses/spec/go/dashboard/plugin"
 	"github.com/perses/spec/go/dashboard/variable"
+	"github.com/perses/spec/go/plugin"
 	"github.com/stretchr/testify/assert"
 	"gopkg.in/yaml.v3"
 )

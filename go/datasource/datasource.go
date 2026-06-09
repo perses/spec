@@ -15,7 +15,7 @@ package datasource
 
 import (
 	"github.com/perses/spec/go/common"
-	"github.com/perses/spec/go/dashboard/plugin"
+	"github.com/perses/spec/go/plugin"
 )
 
 type Spec struct {

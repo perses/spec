@@ -6,7 +6,7 @@ package datasource
 
 import (
 	"github.com/perses/spec/cue/common"
-	plugin_9 "github.com/perses/spec/cue/dashboard/plugin"
+	plugin_9 "github.com/perses/spec/cue/plugin"
 )
 
 #Spec: {

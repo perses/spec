@@ -19,8 +19,8 @@ import (
 	"time"
 
 	"github.com/perses/spec/go/common"
-	"github.com/perses/spec/go/dashboard/plugin"
 	"github.com/perses/spec/go/datasource"
+	"github.com/perses/spec/go/plugin"
 )
 
 type Link struct {

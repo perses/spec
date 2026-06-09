@@ -17,7 +17,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/perses/spec/go/dashboard/plugin"
+	"github.com/perses/spec/go/plugin"
 )
 
 type DefaultValue struct {

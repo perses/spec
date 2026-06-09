@@ -4,7 +4,7 @@
 
 package variable
 
-import plugin_9 "github.com/perses/spec/cue/dashboard/plugin"
+import plugin_9 "github.com/perses/spec/cue/plugin"
 
 #DefaultValue: _
 
