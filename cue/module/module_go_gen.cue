@@ -10,35 +10,6 @@ package module
 
 import "github.com/perses/spec/cue/common"
 
-#Kind: string // #enumKind
-
-#enumKind:
-	#KindVariable |
-	#KindDatasource |
-	#KindPanel |
-	#KindTimeSeriesQuery |
-	#KindTraceQuery |
-	#KindProfileQuery |
-	#KindLogQuery |
-	#KindQuery |
-	#KindAlertsQuery |
-	#KindSilencesQuery |
-	#KindExplore |
-	#KindAnnotation
-
-#KindVariable:        #Kind & "Variable"
-#KindDatasource:      #Kind & "Datasource"
-#KindPanel:           #Kind & "Panel"
-#KindTimeSeriesQuery: #Kind & "TimeSeriesQuery"
-#KindTraceQuery:      #Kind & "TraceQuery"
-#KindProfileQuery:    #Kind & "ProfileQuery"
-#KindLogQuery:        #Kind & "LogQuery"
-#KindQuery:           #Kind & "Query"
-#KindAlertsQuery:     #Kind & "AlertsQuery"
-#KindSilencesQuery:   #Kind & "SilencesQuery"
-#KindExplore:         #Kind & "Explore"
-#KindAnnotation:      #Kind & "Annotation"
-
 #PluginSpec: {
 	display?: null | common.#Display @go(Display,*common.Display)
 	name:     string                 @go(Name)

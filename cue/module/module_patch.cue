@@ -13,8 +13,10 @@
 
 package module
 
+import "github.com/perses/spec/cue/plugin"
+
 #Plugin: {
-	kind: #enumKind @go(Kind)
+	kind: plugin.#enumKind @go(plugin.Kind)
 	spec: #PluginSpec @go(PluginSpec)
 }
 

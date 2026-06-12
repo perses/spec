@@ -7,6 +7,35 @@ package plugin
 #LatestVersion:   "latest"
 #DefaultRegistry: "perses.dev"
 
+#Kind: string // #enumKind
+
+#enumKind:
+	#KindVariable |
+	#KindDatasource |
+	#KindPanel |
+	#KindTimeSeriesQuery |
+	#KindTraceQuery |
+	#KindProfileQuery |
+	#KindLogQuery |
+	#KindQuery |
+	#KindAlertsQuery |
+	#KindSilencesQuery |
+	#KindExplore |
+	#KindAnnotation
+
+#KindVariable:        #Kind & "Variable"
+#KindDatasource:      #Kind & "Datasource"
+#KindPanel:           #Kind & "Panel"
+#KindTimeSeriesQuery: #Kind & "TimeSeriesQuery"
+#KindTraceQuery:      #Kind & "TraceQuery"
+#KindProfileQuery:    #Kind & "ProfileQuery"
+#KindLogQuery:        #Kind & "LogQuery"
+#KindQuery:           #Kind & "Query"
+#KindAlertsQuery:     #Kind & "AlertsQuery"
+#KindSilencesQuery:   #Kind & "SilencesQuery"
+#KindExplore:         #Kind & "Explore"
+#KindAnnotation:      #Kind & "Annotation"
+
 #Metadata: {
 	// Version is optional. If not provided, it means the latest version available in the Perses instance.
 	// Version needs to follow the semantic versioning format (e.g., "1.0.0" or "v1.0.0")

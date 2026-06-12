@@ -23,6 +23,48 @@ const (
 	DefaultRegistry = "perses.dev"
 )
 
+type Kind string
+
+const (
+	KindVariable        Kind = "Variable"
+	KindDatasource      Kind = "Datasource"
+	KindPanel           Kind = "Panel"
+	KindTimeSeriesQuery Kind = "TimeSeriesQuery"
+	KindTraceQuery      Kind = "TraceQuery"
+	KindProfileQuery    Kind = "ProfileQuery"
+	KindLogQuery        Kind = "LogQuery"
+	KindQuery           Kind = "Query"
+	KindAlertsQuery     Kind = "AlertsQuery"
+	KindSilencesQuery   Kind = "SilencesQuery"
+	KindExplore         Kind = "Explore"
+	KindAnnotation      Kind = "Annotation"
+)
+
+var KindMap = map[Kind]bool{
+	KindVariable:        true,
+	KindDatasource:      true,
+	KindPanel:           true,
+	KindTimeSeriesQuery: true,
+	KindTraceQuery:      true,
+	KindProfileQuery:    true,
+	KindLogQuery:        true,
+	KindQuery:           true,
+	KindAlertsQuery:     true,
+	KindSilencesQuery:   true,
+	KindExplore:         true,
+	KindAnnotation:      true,
+}
+
+func (k Kind) IsQuery() bool {
+	return k == KindQuery ||
+		k == KindTimeSeriesQuery ||
+		k == KindTraceQuery ||
+		k == KindProfileQuery ||
+		k == KindLogQuery ||
+		k == KindAlertsQuery ||
+		k == KindSilencesQuery
+}
+
 type Metadata struct {
 	// Version is optional. If not provided, it means the latest version available in the Perses instance.
 	// Version needs to follow the semantic versioning format (e.g., "1.0.0" or "v1.0.0")

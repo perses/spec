@@ -22,49 +22,8 @@ import (
 	"fmt"
 
 	"github.com/perses/spec/go/common"
+	"github.com/perses/spec/go/plugin"
 )
-
-type Kind string
-
-const (
-	KindVariable        Kind = "Variable"
-	KindDatasource      Kind = "Datasource"
-	KindPanel           Kind = "Panel"
-	KindTimeSeriesQuery Kind = "TimeSeriesQuery"
-	KindTraceQuery      Kind = "TraceQuery"
-	KindProfileQuery    Kind = "ProfileQuery"
-	KindLogQuery        Kind = "LogQuery"
-	KindQuery           Kind = "Query"
-	KindAlertsQuery     Kind = "AlertsQuery"
-	KindSilencesQuery   Kind = "SilencesQuery"
-	KindExplore         Kind = "Explore"
-	KindAnnotation      Kind = "Annotation"
-)
-
-var kindMap = map[Kind]bool{
-	KindVariable:        true,
-	KindDatasource:      true,
-	KindPanel:           true,
-	KindTimeSeriesQuery: true,
-	KindTraceQuery:      true,
-	KindProfileQuery:    true,
-	KindLogQuery:        true,
-	KindQuery:           true,
-	KindAlertsQuery:     true,
-	KindSilencesQuery:   true,
-	KindExplore:         true,
-	KindAnnotation:      true,
-}
-
-func (k Kind) IsQuery() bool {
-	return k == KindQuery ||
-		k == KindTimeSeriesQuery ||
-		k == KindTraceQuery ||
-		k == KindProfileQuery ||
-		k == KindLogQuery ||
-		k == KindAlertsQuery ||
-		k == KindSilencesQuery
-}
 
 type PluginSpec struct {
 	Display *common.Display `json:"display" yaml:"display"`
@@ -72,8 +31,8 @@ type PluginSpec struct {
 }
 
 type Plugin struct {
-	Kind Kind       `json:"kind" yaml:"kind"`
-	Spec PluginSpec `json:"spec" yaml:"spec"`
+	Kind plugin.Kind `json:"kind" yaml:"kind"`
+	Spec PluginSpec  `json:"spec" yaml:"spec"`
 }
 
 func (p *Plugin) UnmarshalJSON(data []byte) error {
@@ -103,7 +62,7 @@ func (p *Plugin) UnmarshalYAML(unmarshal func(any) error) error {
 }
 
 func (p *Plugin) validate() error {
-	if !kindMap[p.Kind] {
+	if !plugin.KindMap[p.Kind] {
 		return fmt.Errorf("invalid plugin kind %s", p.Kind)
 	}
 	return nil
