@@ -38,10 +38,32 @@ const (
 	KindAlertsQuery     Kind = "AlertsQuery"
 	KindSilencesQuery   Kind = "SilencesQuery"
 	KindExplore         Kind = "Explore"
+	KindAnnotation      Kind = "Annotation"
 )
 
+var kindMap = map[Kind]bool{
+	KindVariable:        true,
+	KindDatasource:      true,
+	KindPanel:           true,
+	KindTimeSeriesQuery: true,
+	KindTraceQuery:      true,
+	KindProfileQuery:    true,
+	KindLogQuery:        true,
+	KindQuery:           true,
+	KindAlertsQuery:     true,
+	KindSilencesQuery:   true,
+	KindExplore:         true,
+	KindAnnotation:      true,
+}
+
 func (k Kind) IsQuery() bool {
-	return k == KindQuery || k == KindTimeSeriesQuery || k == KindTraceQuery || k == KindProfileQuery || k == KindLogQuery || k == KindAlertsQuery || k == KindSilencesQuery
+	return k == KindQuery ||
+		k == KindTimeSeriesQuery ||
+		k == KindTraceQuery ||
+		k == KindProfileQuery ||
+		k == KindLogQuery ||
+		k == KindAlertsQuery ||
+		k == KindSilencesQuery
 }
 
 type PluginSpec struct {
@@ -81,8 +103,7 @@ func (p *Plugin) UnmarshalYAML(unmarshal func(any) error) error {
 }
 
 func (p *Plugin) validate() error {
-	if p.Kind != KindVariable && p.Kind != KindDatasource &&
-		p.Kind != KindPanel && !p.Kind.IsQuery() && p.Kind != KindExplore {
+	if !kindMap[p.Kind] {
 		return fmt.Errorf("invalid plugin kind %s", p.Kind)
 	}
 	return nil

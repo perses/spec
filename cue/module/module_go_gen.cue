@@ -23,7 +23,8 @@ import "github.com/perses/spec/cue/common"
 	#KindQuery |
 	#KindAlertsQuery |
 	#KindSilencesQuery |
-	#KindExplore
+	#KindExplore |
+	#KindAnnotation
 
 #KindVariable:        #Kind & "Variable"
 #KindDatasource:      #Kind & "Datasource"
@@ -36,6 +37,7 @@ import "github.com/perses/spec/cue/common"
 #KindAlertsQuery:     #Kind & "AlertsQuery"
 #KindSilencesQuery:   #Kind & "SilencesQuery"
 #KindExplore:         #Kind & "Explore"
+#KindAnnotation:      #Kind & "Annotation"
 
 #PluginSpec: {
 	display?: null | common.#Display @go(Display,*common.Display)
