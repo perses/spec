@@ -12,6 +12,8 @@
 // limitations under the License.
 
 import { Definition, Display, UnknownSpec } from '../common';
+import { HTTPProxy } from './proxy/http';
+import { SQLProxy } from './proxy/sql';
 
 export interface DatasourceSpec<PluginSpec = UnknownSpec> {
   display?: Display;
@@ -33,4 +35,13 @@ export interface DatasourceSelector {
    * If omitted, it's assumed that you target the default datasource for the specified kind (and group, if set)
    */
   name?: string;
+}
+
+export interface HTTPDatasourceSpec {
+  directUrl?: string;
+  proxy?: HTTPProxy;
+}
+
+export interface SQLDatasourceSpec {
+  proxy: SQLProxy;
 }

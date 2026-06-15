@@ -17,3 +17,17 @@ import (
 	// The data typed is available in Cue.
 	plugin: plugin_9.#Plugin @go(Plugin)
 }
+
+// HTTPDatasourceSpec is the struct that can be used to define an HTTP Datasource plugin.
+// To be used when implementing a plugin, and you want to provide the associated go-sdk.
+// This struct is just here to avoid developer to redefine the same struct in their own plugin implementation,
+// because most of the time developers do not need more field than the two proposed.
+// If you need more, define your own struct and use it in your plugin implementation.
+#HTTPDatasourceSpec: _
+
+// SQLDatasourceSpec is the struct that can be used to define an SQL Datasource plugin.
+// To be used when implementing a plugin, and you want to provide the associated go-sdk.
+// This struct is just here to avoid developer to redefine the same struct in their own plugin implementation,
+// because most of the time developers do not need more field than the two proposed.
+// If you need more, define your own struct and use it in your plugin implementation.
+#SQLDatasourceSpec: _
