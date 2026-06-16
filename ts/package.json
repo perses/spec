@@ -34,7 +34,7 @@
     "@eslint/js": "10.0.1",
     "@swc/cli": "^0.8.0",
     "@types/node": "^22.13.1",
-    "concurrently": "^9.2.1",
+    "concurrently": "^10.0.3",
     "eslint": "^10.0.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "5.5.5",
