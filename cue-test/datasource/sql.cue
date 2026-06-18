@@ -14,11 +14,16 @@
 package datasource
 
 import (
-	"github.com/perses/spec/cue/common"
 	"github.com/perses/spec/cue/datasource/proxy/sql"
-	"github.com/perses/spec/cue/datasource/proxy/http"
 )
 
-#SQLDatasourceSpec: { proxy: sql.#Proxy }
-
-#HTTPDatasourceSpec: { directUrl: common.#URL } | { proxy: http.#Proxy }
+mySQLProxySpec: #SQLDatasourceSpec & {
+	proxy: sql.#Proxy & {
+		kind: "SQLProxy"
+		spec: {
+			driver:   "postgres"
+			host:     "localhost:5432"
+			database: "mydb"
+		}
+	}
+}

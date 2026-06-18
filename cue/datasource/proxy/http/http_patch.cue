@@ -24,7 +24,7 @@ package http
 import (
 	"github.com/perses/spec/cue/common"
 	"github.com/perses/spec/cue/datasource/proxy"
-	)
+)
 
 #AllowedEndpoint: {
 	endpointPattern: string                                      @go(EndpointPattern)
@@ -47,4 +47,5 @@ import (
 
 #Proxy: proxy.#Proxy & {
 	kind: "HTTPProxy" @go(Kind)
+	spec: #Config     @go(Spec)
 }

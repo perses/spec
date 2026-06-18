@@ -57,4 +57,5 @@ import (
 
 #Proxy: proxy.#Proxy & {
 	kind: "SQLProxy" @go(Kind)
+	spec: #Config    @go(Spec)
 }

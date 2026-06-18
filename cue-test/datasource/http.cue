@@ -14,11 +14,28 @@
 package datasource
 
 import (
-	"github.com/perses/spec/cue/common"
-	"github.com/perses/spec/cue/datasource/proxy/sql"
 	"github.com/perses/spec/cue/datasource/proxy/http"
 )
 
-#SQLDatasourceSpec: { proxy: sql.#Proxy }
+myDirectSpec: #HTTPDatasourceSpec & {
+	directUrl: "http://localhost:8080"
+}
 
-#HTTPDatasourceSpec: { directUrl: common.#URL } | { proxy: http.#Proxy }
+myProxySpec: #HTTPDatasourceSpec & {
+	proxy: http.#Proxy & {
+		kind: "HTTPProxy"
+		spec: {
+			url: "https://prometheus.demo.prometheus.io"
+			allowedEndpoints: [
+				{
+					endpointPattern: "/api/v1/labels"
+					method:          "POST"
+				},
+				{
+					endpointPattern: "/api/v1/series"
+					method:          "POST"
+				},
+			]
+		}
+	}
+}

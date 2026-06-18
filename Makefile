@@ -37,3 +37,8 @@ cue-gen:
 	done
 	cp -r cue.mod/gen/github.com/perses/spec/go/* cue/ && rm -r cue.mod/gen
 	find cue/ -name "*.cue" -exec sed -i 's/\"github.com\/perses\/spec\/go/\"github.com\/perses\/spec\/cue/g' {} \;
+
+.PHONY: cue-test
+cue-test:
+	@echo ">> Run the unit tests for CUE schemas"
+	$(GO) run ./scripts/test-cue/test-cue.go
