@@ -19,6 +19,6 @@ import (
 	"github.com/perses/spec/cue/datasource/proxy/http"
 )
 
-#baseSQLDatasourceSpec: { proxy: sql.#Proxy }
+#SQLDatasourceSpec: { proxy: sql.#Proxy }
 
-#SQLDatasourceSpec: { directUrl: common.#url } | { proxy: http.#Proxy }
+#HTTPDatasourceSpec: { directUrl: common.#url } | { proxy: http.#Proxy }
