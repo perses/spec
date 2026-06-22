@@ -11,11 +11,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export * from './annotation';
-export * from './datasource';
-export * from './display';
-export * from './duration';
-export * from './layout';
-export * from './panel';
-export * from './plugin';
-export * from './variable';
+import { z } from 'zod';
+
+export const repeatVariableSchema = z.object({
+  value: z.string().min(1),
+  maxPer: z.number().int('Provide valid number.').positive().optional(),
+  alignment: z.enum(['horizontal', 'vertical']).optional(),
+});
+
+export const layoutDefinitionSchema = z.object({
+  repeatVariable: repeatVariableSchema.optional(),
+  width: z.number().int().positive(),
+  height: z.number().int().positive(),
+});
