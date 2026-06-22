@@ -12,15 +12,17 @@
 // limitations under the License.
 
 import { z } from 'zod';
+import { GridItemDefinition, RepeatVariable } from '../dashboard';
 
-export const repeatVariableSchema = z.object({
+export const repeatVariableSchema: z.ZodSchema<RepeatVariable> = z.object({
   value: z.string().min(1),
   maxPer: z.number().int('Provide valid number.').positive().optional(),
   alignment: z.enum(['horizontal', 'vertical']).optional(),
 });
 
-export const layoutDefinitionSchema = z.object({
-  repeatVariable: repeatVariableSchema.optional(),
-  width: z.number().int().positive(),
-  height: z.number().int().positive(),
-});
+export const layoutDefinitionSchema: z.ZodSchema<Pick<GridItemDefinition, 'repeatVariable' | 'width' | 'height'>> =
+  z.object({
+    repeatVariable: repeatVariableSchema.optional(),
+    width: z.number().int().positive(),
+    height: z.number().int().positive(),
+  });
