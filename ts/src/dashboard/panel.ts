@@ -15,8 +15,6 @@ import { Definition, UnknownSpec } from '../common';
 import { Link } from './link';
 import { QueryDefinition } from './query-type';
 
-import type { GridItemDefinition } from './layout';
-
 export interface PanelDisplay {
   name?: string;
   description?: string;
@@ -48,5 +46,4 @@ export type PanelGroupId = number;
 export interface PanelEditorValues {
   groupId: PanelGroupId;
   panelDefinition: PanelDefinition;
-  layoutDefinition?: Pick<GridItemDefinition, 'repeatVariable' | 'width' | 'height'>;
 }

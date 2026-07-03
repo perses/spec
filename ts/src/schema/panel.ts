@@ -13,7 +13,6 @@
 
 import { z } from 'zod';
 import { Link, PanelDefinition, PanelDisplay, PanelEditorValues, PanelSpec, QueryDefinition } from '../dashboard';
-import { layoutDefinitionSchema } from './layout';
 import { PluginSchema, pluginSchema } from './plugin';
 
 export const panelDisplaySpec: z.ZodSchema<PanelDisplay> = z.object({
@@ -68,13 +67,11 @@ export function buildPanelDefinitionSchema(pluginSchema: PluginSchema): z.ZodSch
 export const panelEditorSchema: z.ZodSchema<PanelEditorValues> = z.object({
   groupId: z.number(),
   panelDefinition: panelDefinitionSchema,
-  layoutDefinition: layoutDefinitionSchema.optional(),
 });
 
 export function buildPanelEditorSchema(pluginSchema: PluginSchema): z.ZodSchema<PanelEditorValues> {
   return z.object({
     groupId: z.number(),
     panelDefinition: buildPanelDefinitionSchema(pluginSchema),
-    layoutDefinition: layoutDefinitionSchema.optional(),
   });
 }

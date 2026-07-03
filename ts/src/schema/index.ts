@@ -15,7 +15,6 @@ export * from './annotation';
 export * from './datasource';
 export * from './display';
 export * from './duration';
-export * from './layout';
 export * from './panel';
 export * from './plugin';
 export * from './variable';
