@@ -53,13 +53,13 @@ type MySQLConfig struct {
 
 type PostgresConfig struct {
 	// MaxConns is the maximum size of the pool
-	MaxConns int32 `json:"maxConns,omitempty" yaml:"maxConns,omitempty"`
+	MaxConns int32 `json:"max_conns,omitempty" yaml:"max_conns,omitempty"`
 	// ConnectTimeout the timeout value used for socket connect operations.
-	ConnectTimeout common.DurationString `json:"connectTimeout,omitempty" yaml:"connectTimeout,omitempty"`
+	ConnectTimeout common.DurationString `json:"connect_timeout,omitempty" yaml:"connect_timeout,omitempty"`
 	// PrepareThreshold specifies the number of PreparedStatement executions that must occur before the driver begins using server-side prepared statements.
-	PrepareThreshold *int `json:"prepareThreshold,omitempty" yaml:"prepareThreshold,omitempty"`
+	PrepareThreshold *int `json:"prepare_threshold,omitempty" yaml:"prepare_threshold,omitempty"`
 	// SSLMode to use when connecting to postgres
-	SSLMode SSLMode `json:"sslMode,omitempty" yaml:"sslMode,omitempty"`
+	SSLMode SSLMode `json:"ssl_mode,omitempty" yaml:"ssl_mode,omitempty"`
 	// Options specifies command-line options to send to the server at connection start
 	Options string `json:"options,omitempty" yaml:"options,omitempty"`
 }

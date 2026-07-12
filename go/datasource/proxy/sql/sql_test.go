@@ -36,7 +36,7 @@ func TestUnmarshalJSONConfig(t *testing.T) {
   "host": "localhost:5432",
   "database": "test",
   "postgres": {
-    "sslMode": "disable"
+    "ssl_mode": "disable"
   }
 }
 `,
@@ -161,10 +161,10 @@ func TestUnmarshalJSONConfig(t *testing.T) {
   "host": "localhost:5432",
   "database": "test",
   "postgres": {
-    "maxConns": 50,
-    "connectTimeout": "5m",
-    "prepareThreshold": 5,
-    "sslMode": "require",
+    "max_conns": 50,
+    "connect_timeout": "5m",
+    "prepare_threshold": 5,
+    "ssl_mode": "require",
     "options": "-c search_path=myschema"
   }
 }
@@ -190,7 +190,7 @@ func TestUnmarshalJSONConfig(t *testing.T) {
   "host": "localhost:5432",
   "database": "test",
   "postgres": {
-    "sslMode": "notreal"
+    "ssl_mode": "notreal"
   }
 }
 `,
@@ -266,7 +266,7 @@ driver: postgres
 host: localhost:5432
 database: test
 postgres:
-  sslMode: disable
+  ssl_mode: disable
 `,
 			result: Config{
 				Driver:   DriverPostgreSQL,
@@ -376,7 +376,7 @@ driver: postgres
 host: localhost:5432
 database: test
 postgres:
-  sslMode: verify-full
+  ssl_mode: verify-full
 `,
 			result: Config{
 				Driver:   DriverPostgreSQL,
@@ -394,7 +394,7 @@ driver: postgres
 host: localhost:5432
 database: test
 postgres:
-  sslMode: invalid
+  ssl_mode: invalid
 `,
 			expectErr: true,
 		},
