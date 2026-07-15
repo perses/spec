@@ -30,13 +30,13 @@ import (
 	// options specifies command-line options to send to the server at connection start
 	options?: string @go(Options,string)
 	// max_conns is the maximum size of the pool
-	max_conns?: number @go(MaxConns,int)
+	maxConns?: number @go(MaxConns,int)
 	// connect_timeout the timeout value used for socket connect operations.
-	connect_timeout?: common.#DurationString @go(ConnectTimeout)
+	connectTimeout?: common.#DurationString @go(ConnectTimeout)
 	// prepare_threshold specifies the number of PreparedStatement executions that must occur before the driver begins using server-side prepared statements.
-	prepare_threshold?: number @go(PrepareThreshold,int)
+	prepareThreshold?: number @go(PrepareThreshold,int)
 	// ssl_mode to use when connecting to postgres
-	ssl_mode?: #enumSSLMode @go(SSLMode,int)
+	sslMode?: #enumSSLMode @go(SSLMode,int)
 }
 
 #Config: {
