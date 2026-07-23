@@ -37,6 +37,10 @@ type PanelDisplay struct {
 }
 
 type PanelSpec struct {
+	// Preserve unknown fields so plugins and downstream tooling can attach display-level
+	// metadata without it being pruned at admission. The declared fields above stay validated;
+	// Schemaless is intentionally not used, as that would drop their schema entirely.
+	// +kubebuilder:pruning:PreserveUnknownFields
 	Display *PanelDisplay `json:"display,omitempty" yaml:"display,omitempty"`
 	Plugin  plugin.Plugin `json:"plugin" yaml:"plugin"`
 	Queries []Query       `json:"queries,omitempty" yaml:"queries,omitempty"`
@@ -44,7 +48,11 @@ type PanelSpec struct {
 }
 
 type Panel struct {
-	Kind string    `json:"kind" yaml:"kind"`
+	Kind string `json:"kind" yaml:"kind"`
+	// Preserve unknown fields so plugins and downstream tooling can attach panel-level
+	// metadata without it being pruned at admission. The declared fields stay validated;
+	// Schemaless is intentionally not used, as that would drop their schema entirely.
+	// +kubebuilder:pruning:PreserveUnknownFields
 	Spec PanelSpec `json:"spec" yaml:"spec"`
 }
 
