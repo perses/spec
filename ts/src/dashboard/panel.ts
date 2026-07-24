@@ -12,6 +12,7 @@
 // limitations under the License.
 
 import { Definition, UnknownSpec } from '../common';
+import { AnnotationSpec } from './annotation';
 import { Link } from './link';
 import { QueryDefinition } from './query-type';
 
@@ -29,6 +30,7 @@ export interface PanelSpec<PluginSpec = UnknownSpec> {
   plugin: Definition<PluginSpec>;
   queries?: QueryDefinition[];
   links?: Link[];
+  annotations?: AnnotationSpec[];
 }
 
 /**

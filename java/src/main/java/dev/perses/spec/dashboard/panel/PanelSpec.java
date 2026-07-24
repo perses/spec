@@ -16,6 +16,7 @@ package dev.perses.spec.dashboard.panel;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import dev.perses.spec.common.Plugin;
+import dev.perses.spec.dashboard.annotation.AnnotationSpec;
 
 import java.util.List;
 
@@ -32,6 +33,9 @@ public class PanelSpec {
 
     @JsonProperty("links")
     public List<Link> links;
+
+    @JsonProperty("annotations")
+    public List<AnnotationSpec> annotations;
 
     public PanelSpec() {
     }

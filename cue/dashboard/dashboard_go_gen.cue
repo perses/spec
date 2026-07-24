@@ -24,6 +24,7 @@ import plugin_9 "github.com/perses/spec/cue/plugin"
 	plugin:   plugin_9.#Plugin     @go(Plugin)
 	queries?: [...#Query] @go(Queries,[]Query)
 	links?: [...#Link] @go(Links,[]Link)
+	annotations?: [...#AnnotationSpec] @go(Annotations,[]AnnotationSpec)
 }
 
 #Panel: {

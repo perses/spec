@@ -37,10 +37,11 @@ type PanelDisplay struct {
 }
 
 type PanelSpec struct {
-	Display *PanelDisplay `json:"display,omitempty" yaml:"display,omitempty"`
-	Plugin  plugin.Plugin `json:"plugin" yaml:"plugin"`
-	Queries []Query       `json:"queries,omitempty" yaml:"queries,omitempty"`
-	Links   []Link        `json:"links,omitempty" yaml:"links,omitempty"`
+	Display     *PanelDisplay    `json:"display,omitempty" yaml:"display,omitempty"`
+	Plugin      plugin.Plugin    `json:"plugin" yaml:"plugin"`
+	Queries     []Query          `json:"queries,omitempty" yaml:"queries,omitempty"`
+	Links       []Link           `json:"links,omitempty" yaml:"links,omitempty"`
+	Annotations []AnnotationSpec `json:"annotations,omitempty" yaml:"annotations,omitempty"`
 }
 
 type Panel struct {
