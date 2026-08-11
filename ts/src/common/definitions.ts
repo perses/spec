@@ -12,10 +12,26 @@
 // limitations under the License.
 
 /**
+ * Optional metadata attached to a plugin definition. It mirrors the `metadata` field of the backend `Plugin` model
+ * and is mainly used to pin a plugin to a specific version and/or registry.
+ */
+export interface PluginDefinitionMetadata {
+  /**
+   * Version of the plugin to use. When omitted, the latest version available in the Perses instance is used.
+   */
+  version?: string;
+  /**
+   * Registry the plugin comes from. When omitted, the default registry is used.
+   */
+  registry?: string;
+}
+
+/**
  * Base type for definitions in JSON config resources.
  */
 export interface Definition<Spec> {
   kind: string;
+  metadata?: PluginDefinitionMetadata;
   spec: Spec;
 }
 

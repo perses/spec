@@ -16,17 +16,24 @@ package dev.perses.spec.common;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * Optional metadata attached to a plugin definition. Mirrors the Go {@code plugin.Metadata} model.
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Plugin {
-    @JsonProperty(value = "kind", required = true)
-    public String kind;
+public class Metadata {
+    /**
+     * Version is optional. If not provided, it means the latest version available in the Perses instance.
+     * Version needs to follow the semantic versioning format (e.g., "1.0.0" or "v1.0.0").
+     */
+    @JsonProperty("version")
+    public String version;
 
-    @JsonProperty("metadata")
-    public Metadata metadata;
+    /**
+     * Registry is optional. If not provided, it means the default registry is: "perses.dev".
+     */
+    @JsonProperty("registry")
+    public String registry;
 
-    @JsonProperty("spec")
-    public Object spec;
-
-    public Plugin() {
+    public Metadata() {
     }
 }
