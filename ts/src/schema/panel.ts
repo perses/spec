@@ -14,6 +14,7 @@
 import { z } from 'zod';
 import { Link, PanelDefinition, PanelDisplay, PanelSpec, QueryDefinition } from '../dashboard';
 import { PluginSchema, pluginSchema } from './plugin';
+import { annotationSpecSchema } from './annotation';
 
 export const panelDisplaySpec: z.ZodSchema<PanelDisplay> = z.object({
   name: z.string().optional(),
@@ -41,6 +42,7 @@ export const panelSpecSchema: z.ZodSchema<PanelSpec> = z.object({
   plugin: pluginSchema,
   queries: z.array(querySpecSchema).optional(),
   links: z.array(linkSchema).optional(),
+  annotations: z.array(annotationSpecSchema).optional(),
 });
 
 export function buildPanelSpecSchema(pluginSchema: PluginSchema): z.ZodSchema<PanelSpec> {
@@ -49,6 +51,7 @@ export function buildPanelSpecSchema(pluginSchema: PluginSchema): z.ZodSchema<Pa
     plugin: pluginSchema,
     queries: z.array(querySpecSchema).optional(),
     links: z.array(linkSchema).optional(),
+    annotations: z.array(annotationSpecSchema).optional(),
   });
 }
 
