@@ -23,7 +23,7 @@
     "declarationMap": true,
     "pretty": true
   },
-  // For builds that use ts-node to compile the configs (e.g. webpack, jest)
+  // For builds that use ts-node to compile the configs (e.g. webpack)
   "ts-node": {
     "compilerOptions": {
       "module": "commonjs",

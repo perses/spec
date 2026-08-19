@@ -20,8 +20,8 @@
     "build:esm": "swc ./src -d dist --strip-leading-paths --config-file ./.swcrc",
     "build:types": "tsc --project tsconfig.build.json",
     "type-check": "tsc --noEmit",
-    "test": "cross-env TZ=UTC jest",
-    "test:watch": "cross-env TZ=UTC jest --watch",
+    "test": "cross-env TZ=UTC vitest run",
+    "test:watch": "cross-env TZ=UTC vitest",
     "lint": "oxlint src",
     "lint:fix": "oxlint --fix src",
     "format": "oxfmt",
@@ -36,9 +36,11 @@
     "@swc/cli": "^0.8.0",
     "@types/node": "^22.13.1",
     "concurrently": "^10.0.3",
+    "cross-env": "^10.1.0",
     "oxfmt": "0.55.0",
     "oxlint": "1.70.0",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "vitest": "4.1.11"
   },
   "files": [
     "dist"
