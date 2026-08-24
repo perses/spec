@@ -104,5 +104,3 @@ jobs:
       - name: Publish npm package
         if: ${{ github.event.release.tag_name }}
         run: cd ts && npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
