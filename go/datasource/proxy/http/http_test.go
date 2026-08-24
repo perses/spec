@@ -46,6 +46,42 @@ func TestUnmarshalJSONConfig(t *testing.T) {
 				},
 			},
 		},
+		{
+			title: "config with allowed headers",
+			jason: `
+{
+  "url": "http://localhost:9090",
+  "allowHeaders": ["Accept", "Content-Type"]
+}
+`,
+			result: Config{
+				URL: &common.URL{
+					URL: &url.URL{
+						Scheme: "http",
+						Host:   "localhost:9090",
+					},
+				},
+				AllowHeaders: []string{"Accept", "Content-Type"},
+			},
+		},
+		{
+			title: "config with dropped headers",
+			jason: `
+{
+  "url": "http://localhost:9090",
+  "dropHeaders": ["Origin", "Referer"]
+}
+`,
+			result: Config{
+				URL: &common.URL{
+					URL: &url.URL{
+						Scheme: "http",
+						Host:   "localhost:9090",
+					},
+				},
+				DropHeaders: []string{"Origin", "Referer"},
+			},
+		},
 	}
 	for _, test := range testSuite {
 		t.Run(test.title, func(t *testing.T) {
@@ -54,6 +90,18 @@ func TestUnmarshalJSONConfig(t *testing.T) {
 			assert.Equal(t, test.result, result)
 		})
 	}
+}
+
+func TestUnmarshalJSONConfigRejectsConflictingHeaderPolicies(t *testing.T) {
+	data := []byte(`{
+  "url": "http://localhost:9090",
+  "allowHeaders": ["Accept"],
+  "dropHeaders": ["Origin"]
+}`)
+
+	result := Config{}
+	err := json.Unmarshal(data, &result)
+	assert.EqualError(t, err, "cannot specify both allowHeaders and dropHeaders at the same time")
 }
 
 func TestUnmarshalYAMLConfig(t *testing.T) {
@@ -76,12 +124,100 @@ url: "http://localhost:9090"
 				},
 			},
 		},
+		{
+			title: "config with allowed headers",
+			yamele: `
+url: "http://localhost:9090"
+allowHeaders:
+  - Accept
+  - Content-Type
+`,
+			result: Config{
+				URL: &common.URL{
+					URL: &url.URL{
+						Scheme: "http",
+						Host:   "localhost:9090",
+					},
+				},
+				AllowHeaders: []string{"Accept", "Content-Type"},
+			},
+		},
+		{
+			title: "config with dropped headers",
+			yamele: `
+url: "http://localhost:9090"
+dropHeaders:
+  - Origin
+  - Referer
+`,
+			result: Config{
+				URL: &common.URL{
+					URL: &url.URL{
+						Scheme: "http",
+						Host:   "localhost:9090",
+					},
+				},
+				DropHeaders: []string{"Origin", "Referer"},
+			},
+		},
 	}
 	for _, test := range testSuite {
 		t.Run(test.title, func(t *testing.T) {
 			result := Config{}
 			assert.NoError(t, yaml.Unmarshal([]byte(test.yamele), &result))
 			assert.Equal(t, test.result, result)
+		})
+	}
+}
+
+func TestUnmarshalYAMLConfigRejectsConflictingHeaderPolicies(t *testing.T) {
+	data := []byte(`
+url: "http://localhost:9090"
+allowHeaders:
+  - Accept
+dropHeaders:
+  - Origin
+`)
+
+	result := Config{}
+	err := yaml.Unmarshal(data, &result)
+	assert.EqualError(t, err, "cannot specify both allowHeaders and dropHeaders at the same time")
+}
+
+func TestConfigHeaderPoliciesRoundTrip(t *testing.T) {
+	testSuite := []struct {
+		title  string
+		config Config
+	}{
+		{
+			title: "allowed headers",
+			config: Config{
+				URL:          common.MustParseURL("http://localhost:9090"),
+				AllowHeaders: []string{"Accept", "Content-Type"},
+			},
+		},
+		{
+			title: "dropped headers",
+			config: Config{
+				URL:         common.MustParseURL("http://localhost:9090"),
+				DropHeaders: []string{"Origin", "Referer"},
+			},
+		},
+	}
+
+	for _, test := range testSuite {
+		t.Run(test.title, func(t *testing.T) {
+			jsonData, err := json.Marshal(test.config)
+			assert.NoError(t, err)
+			jsonResult := Config{}
+			assert.NoError(t, json.Unmarshal(jsonData, &jsonResult))
+			assert.Equal(t, test.config, jsonResult)
+
+			yamlData, err := yaml.Marshal(test.config)
+			assert.NoError(t, err)
+			yamlResult := Config{}
+			assert.NoError(t, yaml.Unmarshal(yamlData, &yamlResult))
+			assert.Equal(t, test.config, yamlResult)
 		})
 	}
 }

@@ -39,3 +39,23 @@ myProxySpec: #HTTPDatasourceSpec & {
 		}
 	}
 }
+
+myAllowHeadersProxySpec: #HTTPDatasourceSpec & {
+	proxy: http.#Proxy & {
+		kind: "HTTPProxy"
+		spec: {
+			url:          "https://prometheus.demo.prometheus.io"
+			allowHeaders: ["Accept", "Content-Type"]
+		}
+	}
+}
+
+myDropHeadersProxySpec: #HTTPDatasourceSpec & {
+	proxy: http.#Proxy & {
+		kind: "HTTPProxy"
+		spec: {
+			url:         "https://prometheus.demo.prometheus.io"
+			dropHeaders: ["Origin", "Referer"]
+		}
+	}
+}

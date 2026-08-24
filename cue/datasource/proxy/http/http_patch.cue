@@ -43,6 +43,13 @@ import (
 	// secret is the name of the secret that should be used for the proxy or discovery configuration
 	// It will contain any sensitive information such as password, token, certificate.
 	secret?: string @go(Secret)
+	// allowHeaders lists the request headers that may be forwarded to the datasource.
+	// All request headers not in the list are dropped.
+	allowHeaders?: [...string] @go(AllowHeaders)
+	// dropHeaders lists the request headers that must not be forwarded to the datasource.
+	dropHeaders?: [...string] @go(DropHeaders)
+	// A non-empty allow list and a non-empty drop list cannot be used together.
+	(*{allowHeaders?: []} | {dropHeaders?: []})
 }
 
 #Proxy: proxy.#Proxy & {

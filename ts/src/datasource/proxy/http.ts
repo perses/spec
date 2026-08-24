@@ -27,6 +27,11 @@ export interface HTTPProxySpec {
   // secret is the name of the secret that should be used for the proxy or discovery configuration
   // It will contain any sensitive information such as password, token, certificate.
   secret?: string;
+  // allowHeaders lists the request headers that may be forwarded to the datasource.
+  // All request headers not in the list are dropped.
+  allowHeaders?: string[];
+  // dropHeaders lists the request headers that must not be forwarded to the datasource.
+  dropHeaders?: string[];
 }
 
 export interface HTTPAllowedEndpoint {
