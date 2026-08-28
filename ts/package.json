@@ -15,6 +15,7 @@
   "module": "dist/index.js",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "sideEffects": false,
   "scripts": {
     "build": "concurrently \"npm:build:*\"",
     "build:esm": "swc ./src -d dist --strip-leading-paths --config-file ./.swcrc",
