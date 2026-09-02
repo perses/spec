@@ -31,16 +31,16 @@
   "dependencies": {
     "date-fns": "^4.1.0",
     "mathjs": "^15.1.1",
-    "zod": "^3.21.4"
+    "zod": "^4.5.4"
   },
   "devDependencies": {
     "@swc/cli": "^0.8.0",
-    "@types/node": "^24.0.0",
+    "@types/node": "^26.4.0",
     "concurrently": "^10.0.3",
     "cross-env": "^10.1.0",
-    "oxfmt": "0.55.0",
-    "oxlint": "1.70.0",
-    "typescript": "5.9.3",
+    "oxfmt": "0.65.0",
+    "oxlint": "1.80.0",
+    "typescript": "7.0.2",
     "vitest": "4.1.11"
   },
   "files": [
