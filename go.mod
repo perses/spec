@@ -1,6 +1,6 @@
 module github.com/perses/spec
 
-go 1.26.5
+go 1.27.1
 
 require (
 	github.com/sirupsen/logrus v1.10.2
