@@ -17,7 +17,7 @@
   "types": "dist/index.d.ts",
   "sideEffects": false,
   "scripts": {
-    "build": "concurrently \"npm:build:*\"",
+    "build": "concurrently \"pnpm build:esm\" \"pnpm build:types\"",
     "build:esm": "swc ./src -d dist --strip-leading-paths --config-file ./.swcrc",
     "build:types": "tsc --project tsconfig.build.json",
     "type-check": "tsc --noEmit",
@@ -29,13 +29,13 @@
     "format:check": "oxfmt --check"
   },
   "dependencies": {
-    "date-fns": "^4.1.0",
+    "date-fns": "^4.2.1",
     "mathjs": "^15.1.1",
-    "zod": "^3.21.4"
+    "zod": "^3.25.76"
   },
   "devDependencies": {
-    "@swc/cli": "^0.8.0",
-    "@types/node": "^24.0.0",
+    "@swc/cli": "^0.8.1",
+    "@types/node": "^24.13.3",
     "concurrently": "^10.0.3",
     "cross-env": "^10.1.0",
     "oxfmt": "0.55.0",
@@ -45,5 +45,17 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "^12.0.0",
+      "onFail": "ignore"
+    },
+    "runtime": {
+      "name": "node",
+      "version": "24",
+      "onFail": "download"
+    }
+  }
 }
