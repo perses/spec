@@ -17,14 +17,14 @@ import type { AnnotationDisplay, AnnotationSpec } from '../dashboard';
 import { pluginSchema } from './plugin';
 import type { PluginSchema } from './plugin';
 
-export const annotationDisplaySchema: z.ZodSchema<AnnotationDisplay> = z.object({
+export const annotationDisplaySchema: z.ZodType<AnnotationDisplay, AnnotationDisplay> = z.object({
   name: z.string(),
   description: z.string().optional(),
   hidden: z.boolean().optional(),
   color: z.string().optional(),
 });
 
-export function buildAnnotationSpecSchema(customPluginSchema: PluginSchema): z.ZodSchema<AnnotationSpec> {
+export function buildAnnotationSpecSchema(customPluginSchema: PluginSchema): z.ZodType<AnnotationSpec, AnnotationSpec> {
   return z.object({
     display: annotationDisplaySchema,
     plugin: customPluginSchema,

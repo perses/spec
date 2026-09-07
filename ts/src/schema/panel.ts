@@ -18,12 +18,12 @@ import { annotationSpecSchema } from './annotation';
 import { pluginSchema } from './plugin';
 import type { PluginSchema } from './plugin';
 
-export const panelDisplaySpec: z.ZodSchema<PanelDisplay> = z.object({
+export const panelDisplaySpec: z.ZodType<PanelDisplay, PanelDisplay> = z.object({
   name: z.string().optional(),
   description: z.string().optional(),
 });
 
-export const querySpecSchema: z.ZodSchema<QueryDefinition> = z.object({
+export const querySpecSchema: z.ZodType<QueryDefinition, QueryDefinition> = z.object({
   kind: z.string().min(1),
   spec: z.object({
     name: z.string().optional(),
@@ -31,7 +31,7 @@ export const querySpecSchema: z.ZodSchema<QueryDefinition> = z.object({
   }),
 });
 
-export const linkSchema: z.ZodSchema<Link> = z.object({
+export const linkSchema: z.ZodType<Link, Link> = z.object({
   name: z.string().optional(),
   url: z.string().min(1),
   tooltip: z.string().optional(),
@@ -39,7 +39,7 @@ export const linkSchema: z.ZodSchema<Link> = z.object({
   targetBlank: z.boolean().optional(),
 });
 
-export const panelSpecSchema: z.ZodSchema<PanelSpec> = z.object({
+export const panelSpecSchema: z.ZodType<PanelSpec, PanelSpec> = z.object({
   display: panelDisplaySpec.optional(),
   plugin: pluginSchema,
   queries: z.array(querySpecSchema).optional(),
@@ -47,7 +47,7 @@ export const panelSpecSchema: z.ZodSchema<PanelSpec> = z.object({
   annotations: z.array(annotationSpecSchema).optional(),
 });
 
-export function buildPanelSpecSchema(customPluginSchema: PluginSchema): z.ZodSchema<PanelSpec> {
+export function buildPanelSpecSchema(customPluginSchema: PluginSchema): z.ZodType<PanelSpec, PanelSpec> {
   return z.object({
     display: panelDisplaySpec.optional(),
     plugin: customPluginSchema,
@@ -57,12 +57,14 @@ export function buildPanelSpecSchema(customPluginSchema: PluginSchema): z.ZodSch
   });
 }
 
-export const panelDefinitionSchema: z.ZodSchema<PanelDefinition> = z.object({
+export const panelDefinitionSchema: z.ZodType<PanelDefinition, PanelDefinition> = z.object({
   kind: z.literal('Panel'),
   spec: panelSpecSchema,
 });
 
-export function buildPanelDefinitionSchema(customPluginSchema: PluginSchema): z.ZodSchema<PanelDefinition> {
+export function buildPanelDefinitionSchema(
+  customPluginSchema: PluginSchema,
+): z.ZodType<PanelDefinition, PanelDefinition> {
   return z.object({
     kind: z.literal('Panel'),
     spec: buildPanelSpecSchema(customPluginSchema),

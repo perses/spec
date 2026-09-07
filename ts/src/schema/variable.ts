@@ -24,13 +24,13 @@ import type {
 import { pluginSchema } from './plugin';
 import type { PluginSchema } from './plugin';
 
-export const variableDisplaySchema: z.ZodSchema<VariableDisplay> = z.object({
+export const variableDisplaySchema: z.ZodType<VariableDisplay, VariableDisplay> = z.object({
   name: z.string().optional(),
   description: z.string().optional(),
   hidden: z.boolean().optional(),
 });
 
-export const variableListSpecSchema: z.ZodSchema<ListVariableSpec> = z.object({
+export const variableListSpecSchema: z.ZodType<ListVariableSpec, ListVariableSpec> = z.object({
   name: z.string().min(1),
   display: variableDisplaySchema.optional(),
   defaultValue: z.string().or(z.array(z.string())).optional(),
@@ -52,7 +52,9 @@ export const variableListSpecSchema: z.ZodSchema<ListVariableSpec> = z.object({
   plugin: pluginSchema,
 });
 
-export function buildVariableListSpecSchema(customPluginSchema: PluginSchema): z.ZodSchema<ListVariableSpec> {
+export function buildVariableListSpecSchema(
+  customPluginSchema: PluginSchema,
+): z.ZodType<ListVariableSpec, ListVariableSpec> {
   return z.object({
     name: z.string().min(1),
     display: variableDisplaySchema.optional(),
@@ -88,7 +90,7 @@ export function buildVariableListSchema(customPluginSchema: PluginSchema): typeo
   });
 }
 
-export const variableTextSpecSchema: z.ZodSchema<TextVariableSpec> = z.object({
+export const variableTextSpecSchema: z.ZodType<TextVariableSpec, TextVariableSpec> = z.object({
   name: z.string().min(1),
   display: variableDisplaySchema.optional(),
   value: z.string(),
@@ -100,18 +102,22 @@ export const variableTextSchema = z.object({
   spec: variableTextSpecSchema,
 });
 
-export const variableSpecSchema: z.ZodSchema<TextVariableDefinition | ListVariableDefinition> = z.discriminatedUnion(
-  'kind',
-  [variableTextSchema, variableListSchema],
-);
+export const variableSpecSchema: z.ZodType<
+  TextVariableDefinition | ListVariableDefinition,
+  TextVariableDefinition | ListVariableDefinition
+> = z.discriminatedUnion('kind', [variableTextSchema, variableListSchema]);
 
-export function buildVariableSpecSchema(customPluginSchema: PluginSchema): z.ZodSchema<VariableDefinition> {
+export function buildVariableSpecSchema(
+  customPluginSchema: PluginSchema,
+): z.ZodType<VariableDefinition, VariableDefinition> {
   return z.union([variableTextSchema, buildVariableListSchema(customPluginSchema)]);
 }
 
-export const variableDefinitionSchema: z.ZodSchema<VariableDefinition> = variableSpecSchema;
+export const variableDefinitionSchema: z.ZodType<VariableDefinition, VariableDefinition> = variableSpecSchema;
 
-export function buildVariableDefinitionSchema(customPluginSchema: PluginSchema): z.ZodSchema<VariableDefinition> {
+export function buildVariableDefinitionSchema(
+  customPluginSchema: PluginSchema,
+): z.ZodType<VariableDefinition, VariableDefinition> {
   return z.discriminatedUnion('kind', [
     z.object({
       kind: z.literal('ListVariable'),

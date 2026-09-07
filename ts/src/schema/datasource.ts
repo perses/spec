@@ -18,13 +18,13 @@ import { displaySchema } from './display';
 import { pluginSchema } from './plugin';
 import type { PluginSchema } from './plugin';
 
-export const datasourceSpecSchema: z.ZodSchema<DatasourceSpec> = z.object({
+export const datasourceSpecSchema: z.ZodType<DatasourceSpec, DatasourceSpec> = z.object({
   display: displaySchema.optional(),
   default: z.boolean(),
   plugin: pluginSchema,
 });
 
-export function buildDatasourceSpecSchema(customPluginSchema: PluginSchema): z.ZodSchema<DatasourceSpec> {
+export function buildDatasourceSpecSchema(customPluginSchema: PluginSchema): z.ZodType<DatasourceSpec, DatasourceSpec> {
   return z.object({
     display: displaySchema.optional(),
     default: z.boolean(),
