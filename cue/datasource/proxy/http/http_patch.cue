@@ -47,9 +47,8 @@ import (
 	// All request headers not in the list are dropped.
 	allowHeaders?: [...string] @go(AllowHeaders)
 	// dropHeaders lists the request headers that must not be forwarded to the datasource.
+	// If allowHeaders is specified, dropHeaders must be empty.
 	dropHeaders?: [...string] @go(DropHeaders)
-	// A non-empty allow list and a non-empty drop list cannot be used together.
-	(*{allowHeaders?: []} | {dropHeaders?: []})
 }
 
 #Proxy: proxy.#Proxy & {

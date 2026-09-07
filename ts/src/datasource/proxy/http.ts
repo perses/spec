@@ -31,6 +31,7 @@ export interface HTTPProxySpec {
   // All request headers not in the list are dropped.
   allowHeaders?: string[];
   // dropHeaders lists the request headers that must not be forwarded to the datasource.
+  // If allowHeaders is specified, dropHeaders must be empty.
   dropHeaders?: string[];
 }
 

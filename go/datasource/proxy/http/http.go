@@ -86,6 +86,7 @@ type Config struct {
 	// All request headers not in the list are dropped.
 	AllowHeaders []string `json:"allowHeaders,omitempty" yaml:"allowHeaders,omitempty"`
 	// DropHeaders lists the request headers that must not be forwarded to the datasource.
+	// If allowHeaders is specified, dropHeaders must be empty.
 	DropHeaders []string `json:"dropHeaders,omitempty" yaml:"dropHeaders,omitempty"`
 }
 
