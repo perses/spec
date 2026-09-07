@@ -35,13 +35,13 @@
   },
   "devDependencies": {
     "@swc/cli": "^0.8.0",
-    "@types/node": "^24.0.0",
+    "@types/node": "^26.4.1",
     "concurrently": "^10.0.3",
     "cross-env": "^10.1.0",
     "oxfmt": "0.66.0",
     "oxlint": "1.81.0",
     "typescript": "^7.0.2",
-    "vitest": "4.1.11"
+    "vitest": "5.0.0"
   },
   "files": [
     "dist"
