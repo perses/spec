@@ -33,6 +33,8 @@ export interface HTTPProxySpec {
   // dropHeaders lists the request headers that must not be forwarded to the datasource.
   // If allowHeaders is specified, dropHeaders must be empty.
   dropHeaders?: string[];
+  // when set to true, current user's OIDC token will pass through to DataSource for auth.
+  oauthPassthrough?: boolean;
 }
 
 export interface HTTPAllowedEndpoint {

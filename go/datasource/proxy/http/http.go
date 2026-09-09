@@ -88,6 +88,8 @@ type Config struct {
 	// DropHeaders lists the request headers that must not be forwarded to the datasource.
 	// If allowHeaders is specified, dropHeaders must be empty.
 	DropHeaders []string `json:"dropHeaders,omitempty" yaml:"dropHeaders,omitempty"`
+	// OauthPassthrough when set to true, current user's OIDC token will pass through to DataSource for auth.
+	OauthPassthrough bool `json:"oauthPassthrough,omitempty" yaml:"oauthPassthrough,omitempty"`
 }
 
 func (h *Config) UnmarshalJSON(data []byte) error {

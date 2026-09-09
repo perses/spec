@@ -49,6 +49,8 @@ import (
 	// dropHeaders lists the request headers that must not be forwarded to the datasource.
 	// If allowHeaders is specified, dropHeaders must be empty.
 	dropHeaders?: [...string] @go(DropHeaders)
+	// when set to true, current user's OIDC token will pass through to DataSource for auth.
+	oauthPassthrough?: bool @go(OauthPassthrough)
 }
 
 #Proxy: proxy.#Proxy & {
