@@ -15,8 +15,9 @@ import plugin_9 "github.com/perses/spec/cue/plugin"
 }
 
 #PanelDisplay: {
-	name?:        string @go(Name)
-	description?: string @go(Description)
+	name?:        string      @go(Name)
+	description?: string      @go(Description)
+	hideHeader?:  null | bool @go(HideHeader,*bool)
 }
 
 #PanelSpec: {

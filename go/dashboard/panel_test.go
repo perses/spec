@@ -92,3 +92,57 @@ annotations:
 	require.Len(t, spec.Annotations, 1)
 	assert.Equal(t, "Incidents", spec.Annotations[0].Display.Name)
 }
+
+func TestPanelDisplayHideHeaderOmittedIsNil(t *testing.T) {
+	// A panel display without a hideHeader field leaves it nil, distinct from an explicit false.
+	var spec PanelSpec
+	require.NoError(t, json.Unmarshal([]byte(`{
+      "display": {"name": "Requests"},
+      "plugin": {"kind": "TimeSeriesChart", "spec": {}}
+    }`), &spec))
+	require.NotNil(t, spec.Display)
+	assert.Nil(t, spec.Display.HideHeader)
+}
+
+func TestPanelDisplayHideHeaderRoundTripJSON(t *testing.T) {
+	for _, hideHeader := range []bool{true, false} {
+		var spec PanelSpec
+		in := `{
+          "display": {"name": "Requests", "hideHeader": ` + boolLiteral(hideHeader) + `},
+          "plugin": {"kind": "TimeSeriesChart", "spec": {}}
+        }`
+		require.NoError(t, json.Unmarshal([]byte(in), &spec))
+		require.NotNil(t, spec.Display.HideHeader)
+		assert.Equal(t, hideHeader, *spec.Display.HideHeader)
+
+		data, err := json.Marshal(spec)
+		require.NoError(t, err)
+
+		var reparsed PanelSpec
+		require.NoError(t, json.Unmarshal(data, &reparsed))
+		require.NotNil(t, reparsed.Display.HideHeader)
+		assert.Equal(t, hideHeader, *reparsed.Display.HideHeader)
+	}
+}
+
+func TestPanelDisplayHideHeaderRoundTripYAML(t *testing.T) {
+	const in = `
+display:
+  name: Requests
+  hideHeader: false
+plugin:
+  kind: TimeSeriesChart
+  spec: {}
+`
+	var spec PanelSpec
+	require.NoError(t, yaml.Unmarshal([]byte(in), &spec))
+	require.NotNil(t, spec.Display.HideHeader)
+	assert.False(t, *spec.Display.HideHeader)
+}
+
+func boolLiteral(b bool) string {
+	if b {
+		return "true"
+	}
+	return "false"
+}

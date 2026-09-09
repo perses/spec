@@ -19,6 +19,7 @@ import type { QueryDefinition } from './query-type';
 export interface PanelDisplay {
   name?: string;
   description?: string;
+  hideHeader?: boolean;
 }
 
 export interface PanelDefinition<PluginSpec = UnknownSpec> extends Definition<PanelSpec<PluginSpec>> {
