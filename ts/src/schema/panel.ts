@@ -21,6 +21,7 @@ import type { PluginSchema } from './plugin';
 export const panelDisplaySpec: z.ZodType<PanelDisplay, PanelDisplay> = z.object({
   name: z.string().optional(),
   description: z.string().optional(),
+  hideHeader: z.boolean().optional(),
 });
 
 export const querySpecSchema: z.ZodType<QueryDefinition, QueryDefinition> = z.object({

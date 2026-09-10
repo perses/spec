@@ -34,6 +34,7 @@ type Link struct {
 type PanelDisplay struct {
 	Name        string `json:"name,omitempty" yaml:"name,omitempty"`
 	Description string `json:"description,omitempty" yaml:"description,omitempty"`
+	HideHeader  *bool  `json:"hideHeader,omitempty" yaml:"hideHeader,omitempty"`
 }
 
 type PanelSpec struct {

@@ -24,6 +24,9 @@ public class PanelDisplay {
     @JsonProperty("description")
     public String description;
 
+    @JsonProperty("hideHeader")
+    public Boolean hideHeader;
+
     public PanelDisplay() {
     }
 }
