@@ -16,6 +16,7 @@ package common
 import (
 	"fmt"
 	"regexp"
+	"strings"
 )
 
 var idRegexp = regexp.MustCompile("^[a-zA-Z0-9_.-]+$")
@@ -34,6 +35,13 @@ func ValidateID(name string) error {
 
 	if !idRegexp.MatchString(name) {
 		return fmt.Errorf("%q is not a correct name. It should match the regexp: %s", name, idRegexp.String())
+	}
+
+	if strings.Contains(name, "..") {
+		return fmt.Errorf("%q is not a correct name. It should not contain '..'", name)
+	}
+	if strings.HasPrefix(name, ".") || strings.HasSuffix(name, ".") {
+		return fmt.Errorf("%q is not a correct name. It should not start or end with '.'", name)
 	}
 
 	return nil
