@@ -11,13 +11,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { z } from 'zod';
+import { describe, expect, it } from 'vitest';
 
-import { DURATION_REGEX } from '../common';
+import { optionalDurationValidationSchema } from './duration';
 
-export const durationValidationSchema = z
-  .string()
-  .min(1, 'Required')
-  .regex(DURATION_REGEX, 'Must be a valid duration string');
+describe('optionalDurationValidationSchema', () => {
+  it.each([undefined, '', '30s', '1h30m'])('accepts %s', (value) => {
+    expect(optionalDurationValidationSchema.safeParse(value).success).toBe(true);
+  });
 
-export const optionalDurationValidationSchema = durationValidationSchema.or(z.literal('')).optional();
+  it.each(['0', '30 seconds'])('rejects %s', (value) => {
+    expect(optionalDurationValidationSchema.safeParse(value).success).toBe(false);
+  });
+});

@@ -11,6 +11,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import type { DurationString } from '../../common/duration';
+
 export interface HTTPProxy {
   kind: 'HTTPProxy';
   spec: HTTPProxySpec;
@@ -19,6 +21,9 @@ export interface HTTPProxySpec {
   // url is the url of the datasource. It is not the url of the proxy.
   // The Perses server is the proxy, so it needs to know where to redirect the request.
   url: string;
+  // timeout is the maximum amount of time allowed to establish a connection to the datasource.
+  // When not set, Perses uses the connection timeout from its server configuration.
+  timeout?: DurationString;
   // allowedEndpoints is a list of tuples of http methods and http endpoints that will be accessible.
   // Leave it empty if you don't want to restrict the access to the datasource.
   allowedEndpoints?: HTTPAllowedEndpoint[];

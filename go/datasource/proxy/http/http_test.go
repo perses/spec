@@ -15,6 +15,7 @@ package http
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"net/url"
 	"testing"
@@ -44,6 +45,19 @@ func TestUnmarshalJSONConfig(t *testing.T) {
 						Host:   "localhost:9090",
 					},
 				},
+			},
+		},
+		{
+			title: "config with timeout",
+			jason: `
+{
+  "url": "http://localhost:9090",
+  "timeout": "1m30s"
+}
+`,
+			result: Config{
+				URL:     common.MustParseURL("http://localhost:9090"),
+				Timeout: "1m30s",
 			},
 		},
 		{
@@ -104,6 +118,25 @@ func TestUnmarshalJSONConfigRejectsConflictingHeaderPolicies(t *testing.T) {
 	assert.EqualError(t, err, "cannot specify both allowHeaders and dropHeaders at the same time")
 }
 
+func TestUnmarshalJSONConfigRejectsInvalidTimeout(t *testing.T) {
+	testSuite := []struct {
+		title   string
+		timeout string
+		err     string
+	}{
+		{title: "invalid duration", timeout: "30 seconds", err: `unknown unit " seconds" in duration "30 seconds"`},
+		{title: "zero duration", timeout: "0", err: "HTTP proxy timeout must be greater than zero"},
+	}
+	for _, test := range testSuite {
+		t.Run(test.title, func(t *testing.T) {
+			data := []byte(fmt.Sprintf(`{"url":"http://localhost:9090","timeout":%q}`, test.timeout))
+			result := Config{}
+			err := json.Unmarshal(data, &result)
+			assert.EqualError(t, err, test.err)
+		})
+	}
+}
+
 func TestUnmarshalYAMLConfig(t *testing.T) {
 	testSuite := []struct {
 		title  string
@@ -122,6 +155,17 @@ url: "http://localhost:9090"
 						Host:   "localhost:9090",
 					},
 				},
+			},
+		},
+		{
+			title: "config with timeout",
+			yamele: `
+url: "http://localhost:9090"
+timeout: "1m30s"
+`,
+			result: Config{
+				URL:     common.MustParseURL("http://localhost:9090"),
+				Timeout: "1m30s",
 			},
 		},
 		{
@@ -184,7 +228,26 @@ dropHeaders:
 	assert.EqualError(t, err, "cannot specify both allowHeaders and dropHeaders at the same time")
 }
 
-func TestConfigHeaderPoliciesRoundTrip(t *testing.T) {
+func TestUnmarshalYAMLConfigRejectsInvalidTimeout(t *testing.T) {
+	testSuite := []struct {
+		title   string
+		timeout string
+		err     string
+	}{
+		{title: "invalid duration", timeout: "30 seconds", err: `unknown unit " seconds" in duration "30 seconds"`},
+		{title: "zero duration", timeout: "0", err: "HTTP proxy timeout must be greater than zero"},
+	}
+	for _, test := range testSuite {
+		t.Run(test.title, func(t *testing.T) {
+			data := []byte(fmt.Sprintf("url: http://localhost:9090\ntimeout: %q\n", test.timeout))
+			result := Config{}
+			err := yaml.Unmarshal(data, &result)
+			assert.EqualError(t, err, test.err)
+		})
+	}
+}
+
+func TestConfigRoundTrip(t *testing.T) {
 	testSuite := []struct {
 		title  string
 		config Config
@@ -201,6 +264,13 @@ func TestConfigHeaderPoliciesRoundTrip(t *testing.T) {
 			config: Config{
 				URL:         common.MustParseURL("http://localhost:9090"),
 				DropHeaders: []string{"Origin", "Referer"},
+			},
+		},
+		{
+			title: "timeout",
+			config: Config{
+				URL:     common.MustParseURL("http://localhost:9090"),
+				Timeout: "2m",
 			},
 		},
 	}
