@@ -61,3 +61,12 @@ myDropHeadersProxySpec: #HTTPDatasourceSpec & {
 	}
 }
 
+myZeroTimeoutProxySpec: #HTTPDatasourceSpec & {
+	proxy: http.#Proxy & {
+		kind: "HTTPProxy"
+		spec: {
+			url:     "https://prometheus.demo.prometheus.io"
+			timeout: "0s"
+		}
+	}
+}

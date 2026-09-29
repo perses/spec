@@ -61,6 +61,19 @@ func TestUnmarshalJSONConfig(t *testing.T) {
 			},
 		},
 		{
+			title: "config with zero timeout",
+			jason: `
+{
+  "url": "http://localhost:9090",
+  "timeout": "0"
+}
+`,
+			result: Config{
+				URL:     common.MustParseURL("http://localhost:9090"),
+				Timeout: "0",
+			},
+		},
+		{
 			title: "config with allowed headers",
 			jason: `
 {
@@ -125,7 +138,6 @@ func TestUnmarshalJSONConfigRejectsInvalidTimeout(t *testing.T) {
 		err     string
 	}{
 		{title: "invalid duration", timeout: "30 seconds", err: `unknown unit " seconds" in duration "30 seconds"`},
-		{title: "zero duration", timeout: "0", err: "HTTP proxy timeout must be greater than zero"},
 	}
 	for _, test := range testSuite {
 		t.Run(test.title, func(t *testing.T) {
@@ -166,6 +178,17 @@ timeout: "1m30s"
 			result: Config{
 				URL:     common.MustParseURL("http://localhost:9090"),
 				Timeout: "1m30s",
+			},
+		},
+		{
+			title: "config with zero timeout",
+			yamele: `
+url: "http://localhost:9090"
+timeout: "0s"
+`,
+			result: Config{
+				URL:     common.MustParseURL("http://localhost:9090"),
+				Timeout: "0s",
 			},
 		},
 		{
@@ -235,7 +258,6 @@ func TestUnmarshalYAMLConfigRejectsInvalidTimeout(t *testing.T) {
 		err     string
 	}{
 		{title: "invalid duration", timeout: "30 seconds", err: `unknown unit " seconds" in duration "30 seconds"`},
-		{title: "zero duration", timeout: "0", err: "HTTP proxy timeout must be greater than zero"},
 	}
 	for _, test := range testSuite {
 		t.Run(test.title, func(t *testing.T) {
@@ -271,6 +293,13 @@ func TestConfigRoundTrip(t *testing.T) {
 			config: Config{
 				URL:     common.MustParseURL("http://localhost:9090"),
 				Timeout: "2m",
+			},
+		},
+		{
+			title: "zero timeout",
+			config: Config{
+				URL:     common.MustParseURL("http://localhost:9090"),
+				Timeout: "0s",
 			},
 		},
 	}

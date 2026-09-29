@@ -19,5 +19,3 @@ export const durationValidationSchema = z
   .string()
   .min(1, 'Required')
   .regex(DURATION_REGEX, 'Must be a valid duration string');
-
-export const optionalDurationValidationSchema = durationValidationSchema.or(z.literal('')).optional();

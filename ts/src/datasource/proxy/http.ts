@@ -22,7 +22,7 @@ export interface HTTPProxySpec {
   // The Perses server is the proxy, so it needs to know where to redirect the request.
   url: string;
   // timeout is the maximum amount of time allowed to establish a connection to the datasource.
-  // When not set, Perses uses the connection timeout from its server configuration.
+  // When not set or set to 0, Perses uses the connection timeout from its server configuration.
   timeout?: DurationString;
   // allowedEndpoints is a list of tuples of http methods and http endpoints that will be accessible.
   // Leave it empty if you don't want to restrict the access to the datasource.
