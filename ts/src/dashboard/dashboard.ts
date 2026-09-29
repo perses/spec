@@ -19,6 +19,21 @@ import type { Link } from './link';
 import type { PanelDefinition } from './panel';
 import type { VariableDefinition } from './variable';
 
+/** Optional PromQL query packing for multi-series panels. */
+export type QueryBatchingMode = 'off' | 'panel' | 'viewport' | 'dashboard';
+
+export interface QueryBatchingSpec {
+  /**
+   * off = disabled;
+   * panel = batch queries within one panel;
+   * viewport = batch across visible panels;
+   * dashboard = batch across the whole dashboard (including non-visible panels when loaded).
+   */
+  mode?: QueryBatchingMode;
+  /** Optional max queries per batch HTTP request (default runtime-defined). */
+  maxPerRequest?: number;
+}
+
 export interface DashboardSpec {
   display?: Display;
   datasources?: Record<string, DatasourceSpec>;
@@ -30,6 +45,7 @@ export interface DashboardSpec {
   panels: Record<string, PanelDefinition>;
   timezone?: string;
   links?: Link[];
+  queryBatching?: QueryBatchingSpec;
 }
 
 export interface DashboardSelector {
