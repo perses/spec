@@ -69,5 +69,5 @@ func (k *Kind) validate() error {
 type Display struct {
 	Name        string `json:"name,omitempty" yaml:"name,omitempty"`
 	Description string `json:"description,omitempty" yaml:"description,omitempty"`
-	Hidden      bool   `json:"hidden" yaml:"hidden"`
+	Hidden      bool   `json:"hidden,omitempty" yaml:"hidden,omitempty"`
 }

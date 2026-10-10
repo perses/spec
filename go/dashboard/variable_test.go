@@ -588,8 +588,7 @@ func TestMarshalListVariable(t *testing.T) {
   "kind": "ListVariable",
   "spec": {
     "display": {
-      "name": "my awesome variable",
-      "hidden": false
+      "name": "my awesome variable"
     },
     "allowAllValue": false,
     "allowMultiple": false,
@@ -625,8 +624,7 @@ func TestMarshalListVariable(t *testing.T) {
   "kind": "ListVariable",
   "spec": {
     "display": {
-      "name": "my awesome variable",
-      "hidden": false
+      "name": "my awesome variable"
     },
     "allowAllValue": false,
     "allowMultiple": false,
@@ -667,8 +665,7 @@ func TestMarshalListVariable(t *testing.T) {
   "kind": "ListVariable",
   "spec": {
     "display": {
-      "name": "my awesome variable",
-      "hidden": false
+      "name": "my awesome variable"
     },
     "allowAllValue": false,
     "allowMultiple": false,
@@ -711,8 +708,7 @@ func TestMarshalListVariable(t *testing.T) {
   "kind": "ListVariable",
   "spec": {
     "display": {
-      "name": "my awesome variable",
-      "hidden": false
+      "name": "my awesome variable"
     },
     "defaultValue": "default",
     "allowAllValue": false,
@@ -757,8 +753,7 @@ func TestMarshalListVariable(t *testing.T) {
   "kind": "ListVariable",
   "spec": {
     "display": {
-      "name": "my awesome variable",
-      "hidden": false
+      "name": "my awesome variable"
     },
     "defaultValue": [
       "default1",

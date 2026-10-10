@@ -16,5 +16,5 @@ package variable
 #Display: {
 	name?:        string @go(Name)
 	description?: string @go(Description)
-	hidden:       bool   @go(Hidden)
+	hidden?:      bool   @go(Hidden)
 }
