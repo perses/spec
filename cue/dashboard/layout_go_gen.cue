@@ -43,12 +43,38 @@ import "github.com/perses/spec/cue/common"
 	open: bool @go(Open)
 }
 
+#VisibilityOperator: _ // #enumVisibilityOperator
+
+#enumVisibilityOperator:
+	#VisibilityOperatorEquals |
+	#VisibilityOperatorNotEquals |
+	#VisibilityOperatorMatches |
+	#VisibilityOperatorNotMatches
+
+#VisibilityOperatorEquals:     #VisibilityOperator & "equals"
+#VisibilityOperatorNotEquals:  #VisibilityOperator & "notEquals"
+#VisibilityOperatorMatches:    #VisibilityOperator & "matches"
+#VisibilityOperatorNotMatches: #VisibilityOperator & "notMatches"
+
+// Visibility shows the layout only when the selected values of the variable satisfy Operator against Value.
+// Patterns of the matches operators are anchored (full match), like Prometheus label matchers.
+#Visibility: {
+	variable: string @go(Variable)
+
+	// Defaults to equals: at least one selected value is listed in Value.
+	operator?: #VisibilityOperator @go(Operator)
+	value: [...string] @go(Value,[]string)
+}
+
 #GridLayoutDisplay: {
 	title: string @go(Title)
 
 	// If Collapse is defined, the grid layout will be rendered in a collapsible group.
 	// If not defined, the grid layout will be rendered expanded without the ability to collapse it.
 	collapse?: null | #GridLayoutCollapse @go(Collapse,*GridLayoutCollapse)
+
+	// If Visibility is defined, the grid layout is only rendered (and queried) when it matches.
+	visibility?: null | #Visibility @go(Visibility,*Visibility)
 }
 
 #GridLayoutSpec: {
