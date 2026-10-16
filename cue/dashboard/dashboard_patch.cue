@@ -44,4 +44,10 @@ import (
 	refreshInterval?: common.#DurationString         @go(RefreshInterval)
 	timezone?:        string                         @go(Timezone)
 	links?: [...#Link] @go(Links,[]Link)
+	queryBatching?: #QueryBatchingSpec @go(QueryBatching,*QueryBatchingSpec)
+}
+
+#QueryBatchingSpec: {
+	mode?:          "off" | "panel" | "viewport" | "dashboard" @go(Mode)
+	maxPerRequest?: int & >=0                    @go(MaxPerRequest)
 }

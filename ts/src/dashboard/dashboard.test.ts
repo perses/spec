@@ -83,7 +83,8 @@ const dashboardSpecJSON = `{
     }
   },
   "timezone": "America/New_York",
-  "links": [{ "name": "Docs", "url": "https://perses.dev", "renderVariables": true }]
+  "links": [{ "name": "Docs", "url": "https://perses.dev", "renderVariables": true }],
+  "queryBatching": { "mode": "panel", "maxPerRequest": 16 }
 }`;
 
 // The same payload, hand-typed as a DashboardSpec literal. Because this is a plain object
@@ -154,6 +155,7 @@ const expectedDashboardSpec: DashboardSpec = {
   },
   timezone: 'America/New_York',
   links: [{ name: 'Docs', url: 'https://perses.dev', renderVariables: true }],
+  queryBatching: { mode: 'panel', maxPerRequest: 16 },
 };
 
 describe('DashboardSpec JSON representation', () => {

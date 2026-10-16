@@ -75,6 +75,16 @@ type Spec struct {
 	Timezone string `json:"timezone,omitempty" yaml:"timezone,omitempty"`
 	// Links is an optional list of links to display at the dashboard level
 	Links []Link `json:"links,omitempty" yaml:"links,omitempty"`
+	// QueryBatching controls PromQL packing (same-panel / viewport). Optional.
+	QueryBatching *QueryBatchingSpec `json:"queryBatching,omitempty" yaml:"queryBatching,omitempty"`
+}
+
+// QueryBatchingSpec configures optional PromQL packing at the dashboard level.
+type QueryBatchingSpec struct {
+	// Mode: off | panel (one panel) | viewport (visible panels) | dashboard (whole dashboard).
+	Mode string `json:"mode,omitempty" yaml:"mode,omitempty"`
+	// MaxPerRequest caps queries per batch HTTP call (optional).
+	MaxPerRequest int `json:"maxPerRequest,omitempty" yaml:"maxPerRequest,omitempty"`
 }
 
 func (d *Spec) UnmarshalJSON(data []byte) error {
@@ -135,6 +145,25 @@ func (d *Spec) validate() error {
 	}
 	if err := validateTimezone(d.Timezone); err != nil {
 		return err
+	}
+	if err := validateQueryBatching(d.QueryBatching); err != nil {
+		return err
+	}
+	return nil
+}
+
+func validateQueryBatching(q *QueryBatchingSpec) error {
+	if q == nil {
+		return nil
+	}
+	switch q.Mode {
+	case "", "off", "panel", "viewport", "dashboard":
+		// ok
+	default:
+		return fmt.Errorf("queryBatching.mode %q is invalid (want off|panel|viewport|dashboard)", q.Mode)
+	}
+	if q.MaxPerRequest < 0 {
+		return fmt.Errorf("queryBatching.maxPerRequest must be >= 0")
 	}
 	return nil
 }
