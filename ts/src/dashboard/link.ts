@@ -13,8 +13,12 @@
 
 export interface Link {
   name?: string;
-  url: string;
+  url?: string;
   tooltip?: string;
   renderVariables?: boolean;
   targetBlank?: boolean;
+  /** Same-project menu. Mutually exclusive with url. */
+  tags?: string[];
+  keepTime?: boolean;
+  includeVariables?: boolean;
 }

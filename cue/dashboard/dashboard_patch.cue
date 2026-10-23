@@ -22,6 +22,8 @@
 package dashboard
 
 import (
+	"list"
+
 	"github.com/perses/spec/cue/common"
 	"github.com/perses/spec/cue/datasource"
 )
@@ -44,4 +46,23 @@ import (
 	refreshInterval?: common.#DurationString         @go(RefreshInterval)
 	timezone?:        string                         @go(Timezone)
 	links?: [...#Link] @go(Links,[]Link)
+}
+
+#Link: {
+	name?:            string @go(Name)
+	url?:             string @go(URL)
+	tooltip?:         string @go(Tooltip)
+	renderVariables?: bool   @go(RenderVariables)
+	targetBlank?:     bool   @go(TargetBlank)
+	tags?: [...string] @go(Tags,[]string)
+	keepTime?:         bool @go(KeepTime)
+	includeVariables?: bool @go(IncludeVariables)
+	{
+		url: !~#"^\s*$"#
+		tags?: []
+	} | {
+		name: !~#"^\s*$"#
+		url?: =~#"^\s*$"#
+		tags: [...!~#"^\s*$"#] & list.MinItems(1)
+	}
 }

@@ -23,14 +23,6 @@ import (
 	"github.com/perses/spec/go/plugin"
 )
 
-type Link struct {
-	Name            string `json:"name,omitempty" yaml:"name,omitempty"`
-	URL             string `json:"url" yaml:"url"`
-	Tooltip         string `json:"tooltip,omitempty" yaml:"tooltip,omitempty"`
-	RenderVariables bool   `json:"renderVariables,omitempty" yaml:"renderVariables,omitempty"`
-	TargetBlank     bool   `json:"targetBlank,omitempty" yaml:"targetBlank,omitempty"`
-}
-
 type PanelDisplay struct {
 	Name        string `json:"name,omitempty" yaml:"name,omitempty"`
 	Description string `json:"description,omitempty" yaml:"description,omitempty"`
@@ -133,8 +125,5 @@ func (d *Spec) validate() error {
 	if len(d.Duration) == 0 {
 		d.Duration = "1h"
 	}
-	if err := validateTimezone(d.Timezone); err != nil {
-		return err
-	}
-	return nil
+	return validateTimezone(d.Timezone)
 }
