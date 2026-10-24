@@ -32,7 +32,7 @@ const (
 )
 
 // dirsInScope specifies which subdirectories under cue/ to validate
-var dirsInScope = []string{"datasource"}
+var dirsInScope = []string{"dashboard", "datasource"}
 
 // NB: this function assume 1 dirInScope = 1 package. CUE allows multiple packages per dirInScope, but this is not used here.
 func findPackages(basePath string, dirInScope string) ([]string, error) {
