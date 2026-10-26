@@ -66,13 +66,13 @@ public class Layout {
     }
 
     public enum VisibilityOperator {
-        @JsonProperty("equals")
+        @JsonProperty("=")
         EQUALS,
-        @JsonProperty("notEquals")
+        @JsonProperty("!=")
         NOT_EQUALS,
-        @JsonProperty("matches")
+        @JsonProperty("=~")
         MATCHES,
-        @JsonProperty("notMatches")
+        @JsonProperty("!~")
         NOT_MATCHES
     }
 
