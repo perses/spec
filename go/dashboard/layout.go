@@ -133,11 +133,71 @@ type GridLayoutCollapse struct {
 	Open bool `json:"open" yaml:"open"`
 }
 
+type VisibilityOperator string
+
+const (
+	VisibilityOperatorEquals     VisibilityOperator = "="
+	VisibilityOperatorNotEquals  VisibilityOperator = "!="
+	VisibilityOperatorMatches    VisibilityOperator = "=~"
+	VisibilityOperatorNotMatches VisibilityOperator = "!~"
+)
+
+var visibilityOperatorMap = map[VisibilityOperator]bool{
+	VisibilityOperatorEquals:     true,
+	VisibilityOperatorNotEquals:  true,
+	VisibilityOperatorMatches:    true,
+	VisibilityOperatorNotMatches: true,
+}
+
+func (o *VisibilityOperator) UnmarshalJSON(data []byte) error {
+	var tmp VisibilityOperator
+	type plain VisibilityOperator
+	if err := json.Unmarshal(data, (*plain)(&tmp)); err != nil {
+		return err
+	}
+	if err := (&tmp).validate(); err != nil {
+		return err
+	}
+	*o = tmp
+	return nil
+}
+
+func (o *VisibilityOperator) UnmarshalYAML(unmarshal func(any) error) error {
+	var tmp VisibilityOperator
+	type plain VisibilityOperator
+	if err := unmarshal((*plain)(&tmp)); err != nil {
+		return err
+	}
+	if err := (&tmp).validate(); err != nil {
+		return err
+	}
+	*o = tmp
+	return nil
+}
+
+func (o *VisibilityOperator) validate() error {
+	if _, ok := visibilityOperatorMap[*o]; !ok {
+		return fmt.Errorf("unknown visibility.operator %q used", *o)
+	}
+	return nil
+}
+
+// Visibility shows the layout only when the selected values of the variable satisfy Operator against Value.
+// = and != compare values. =~ and !~ use anchored patterns, like Prometheus label matchers.
+type Visibility struct {
+	Variable string `json:"variable" yaml:"variable"`
+	// Defaults to =: at least one selected value is listed in Value.
+	Operator VisibilityOperator `json:"operator,omitempty" yaml:"operator,omitempty"`
+	Value    []string           `json:"value" yaml:"value"`
+}
+
 type GridLayoutDisplay struct {
 	Title string `json:"title" yaml:"title"`
 	// If Collapse is defined, the grid layout will be rendered in a collapsible group.
 	// If not defined, the grid layout will be rendered expanded without the ability to collapse it.
 	Collapse *GridLayoutCollapse `json:"collapse,omitempty" yaml:"collapse,omitempty"`
+	// If Visibility is defined, the grid layout is only rendered (and queried) when it matches.
+	Visibility *Visibility `json:"visibility,omitempty" yaml:"visibility,omitempty"`
 }
 
 type GridLayoutSpec struct {

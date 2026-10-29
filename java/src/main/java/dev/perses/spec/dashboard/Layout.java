@@ -65,11 +65,33 @@ public class Layout {
         public boolean open;
     }
 
+    public enum VisibilityOperator {
+        @JsonProperty("=")
+        EQUALS,
+        @JsonProperty("!=")
+        NOT_EQUALS,
+        @JsonProperty("=~")
+        MATCHES,
+        @JsonProperty("!~")
+        NOT_MATCHES
+    }
+
+    public static class Visibility {
+        @JsonProperty(value = "variable", required = true)
+        public String variable;
+        @JsonProperty("operator")
+        public VisibilityOperator operator;
+        @JsonProperty(value = "value", required = true)
+        public List<String> value;
+    }
+
     public static class GridLayoutDisplay {
         @JsonProperty("title")
         public String title;
         @JsonProperty("collapse")
         public GridLayoutCollapse collapse;
+        @JsonProperty("visibility")
+        public Visibility visibility;
     }
 
     public static class GridLayoutSpec {

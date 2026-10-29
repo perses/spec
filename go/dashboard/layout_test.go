@@ -231,6 +231,54 @@ func TestUnmarshalJSONLayout(t *testing.T) {
 			},
 		},
 		{
+			title: "grid layout with visibility",
+			jason: `
+{
+  "kind": "Grid",
+  "spec": {
+    "display": {
+      "title": "Background workers",
+      "visibility": {
+        "variable": "phase",
+        "operator": "!=",
+        "value": ["PRD"]
+      }
+    },
+    "items": [
+      {
+        "x": 0,
+        "y": 0,
+        "width": 3,
+        "height": 4,
+        "content": { "$ref": "#/panels/gaugeCpuBusy" }
+      }
+    ]
+  }
+}
+`,
+			result: Layout{
+				Kind: KindGridLayout,
+				Spec: &GridLayoutSpec{
+					Display: &GridLayoutDisplay{
+						Title:      "Background workers",
+						Visibility: &Visibility{Variable: "phase", Operator: VisibilityOperatorNotEquals, Value: []string{"PRD"}},
+					},
+					Items: []GridItem{
+						{
+							X:      0,
+							Y:      0,
+							Width:  3,
+							Height: 4,
+							Content: &common.JSONRef{
+								Ref:  "#/panels/gaugeCpuBusy",
+								Path: []string{"panels", "gaugeCpuBusy"},
+							},
+						},
+					},
+				},
+			},
+		},
+		{
 			title: "basic tabs layout",
 			jason: `
 {
@@ -514,6 +562,21 @@ func TestUnmarshalJSONLayout(t *testing.T) {
 			}`,
 			errorMsg: "unknown repeatVariable.alignment",
 		},
+		{
+			title: "unknown visibility operator",
+			jason: `
+			{
+			  "kind": "Grid",
+			  "spec": {
+				"display": {
+				  "title": "t",
+				  "visibility": { "variable": "phase", "operator": "like", "value": ["DEV"] }
+				},
+				"items": []
+			  }
+			}`,
+			errorMsg: "unknown visibility.operator",
+		},
 	}
 	for _, test := range errorTestSuite {
 		t.Run(test.title, func(t *testing.T) {
@@ -627,6 +690,47 @@ spec:
 							Content: &common.JSONRef{
 								Ref:  "#/panels/gaugeSystemLoad",
 								Path: []string{"panels", "gaugeSystemLoad"},
+							},
+						},
+					},
+				},
+			},
+		},
+		{
+			title: "grid layout with visibility",
+			yamele: `
+kind: "Grid"
+spec:
+  display:
+    title: "Background workers"
+    visibility:
+      variable: "phase"
+      operator: "!="
+      value: ["PRD"]
+  items:
+  - x: 0
+    y: 0
+    width: 3
+    height: 4
+    content:
+      $ref: "#/panels/gaugeCpuBusy"
+`,
+			result: Layout{
+				Kind: KindGridLayout,
+				Spec: &GridLayoutSpec{
+					Display: &GridLayoutDisplay{
+						Title:      "Background workers",
+						Visibility: &Visibility{Variable: "phase", Operator: VisibilityOperatorNotEquals, Value: []string{"PRD"}},
+					},
+					Items: []GridItem{
+						{
+							X:      0,
+							Y:      0,
+							Width:  3,
+							Height: 4,
+							Content: &common.JSONRef{
+								Ref:  "#/panels/gaugeCpuBusy",
+								Path: []string{"panels", "gaugeCpuBusy"},
 							},
 						},
 					},
@@ -881,6 +985,21 @@ spec:
       alignment: diagonal
 `,
 			errorMsg: "unknown repeatVariable.alignment",
+		},
+		{
+			title: "unknown visibility operator",
+			yamele: `
+kind: "Grid"
+spec:
+  display:
+    title: t
+    visibility:
+      variable: phase
+      operator: like
+      value: [DEV]
+  items: []
+`,
+			errorMsg: "unknown visibility.operator",
 		},
 	}
 	for _, test := range errorTestSuite {
