@@ -23,14 +23,15 @@ jobs:
       - name: checkout
         uses: actions/checkout@v7
       - uses: perses/github-actions@v0.13.0
-      - uses: ./.github/perses-ci/actions/setup_environment
+      - uses: pnpm/setup@v2.1.0
         with:
-          enable_npm: true
-          nvmrc_path: "./ts/.nvmrc"
+          working-directory: ./ts
+          install: false
+          cache: true
       - name: install deps
-        run: cd ./ts && npm ci
-      - run: cd ./ts && npm run lint
-      - run: cd ./ts && npm run format:check
+        run: cd ./ts && pnpm install --frozen-lockfile
+      - run: cd ./ts && pnpm run lint
+      - run: cd ./ts && pnpm run format:check
   test:
     name: test
     runs-on: ubuntu-latest
@@ -38,13 +39,14 @@ jobs:
       - name: checkout
         uses: actions/checkout@v7
       - uses: perses/github-actions@v0.13.0
-      - uses: ./.github/perses-ci/actions/setup_environment
+      - uses: pnpm/setup@v2.1.0
         with:
-          enable_npm: true
-          nvmrc_path: "./ts/.nvmrc"
+          working-directory: ./ts
+          install: false
+          cache: true
       - name: install deps
-        run: cd ./ts && npm ci
-      - run: cd ./ts && npm run test
+        run: cd ./ts && pnpm install --frozen-lockfile
+      - run: cd ./ts && pnpm run test
   type_check:
     name: "type check"
     runs-on: ubuntu-latest
@@ -52,13 +54,14 @@ jobs:
       - name: checkout
         uses: actions/checkout@v7
       - uses: perses/github-actions@v0.13.0
-      - uses: ./.github/perses-ci/actions/setup_environment
+      - uses: pnpm/setup@v2.1.0
         with:
-          enable_npm: true
-          nvmrc_path: "./ts/.nvmrc"
+          working-directory: ./ts
+          install: false
+          cache: true
       - name: install deps
-        run: cd ./ts && npm ci
-      - run: cd ./ts && npm run type-check
+        run: cd ./ts && pnpm install --frozen-lockfile
+      - run: cd ./ts && pnpm run type-check
   build:
     name: 'build'
     runs-on: ubuntu-latest
@@ -66,14 +69,15 @@ jobs:
       - name: checkout
         uses: actions/checkout@v7
       - uses: perses/github-actions@v0.13.0
-      - uses: ./.github/perses-ci/actions/setup_environment
+      - uses: pnpm/setup@v2.1.0
         with:
-          enable_npm: true
-          nvmrc_path: './ts/.nvmrc'
+          working-directory: ./ts
+          install: false
+          cache: true
       - name: install dependencies
-        run: cd ./ts && npm ci
+        run: cd ./ts && pnpm install --frozen-lockfile
       - name: build libraries
-        run: cd ./ts && npm run build
+        run: cd ./ts && pnpm run build
       - name: store libraries archives
         uses: actions/upload-artifact@v7
         with:
@@ -92,10 +96,11 @@ jobs:
       - name: checkout
         uses: actions/checkout@v7
       - uses: perses/github-actions@v0.13.0
-      - uses: ./.github/perses-ci/actions/setup_environment
+      - uses: pnpm/setup@v2.1.0
         with:
-          enable_npm: true
-          nvmrc_path: './ts/.nvmrc'
+          working-directory: ./ts
+          install: false
+          cache: true
       - name: Download archive
         uses: actions/download-artifact@v8
         with:
@@ -105,14 +110,15 @@ jobs:
         if: ${{ !github.event.release.tag_name }}
         working-directory: ts
         run: |
-          npm pkg set private=true --json
-          npm version prerelease \
+          pnpm pkg set private=true --json
+          pnpm version prerelease \
             --preid="dry-run.${GITHUB_RUN_ID}.${GITHUB_RUN_ATTEMPT}" \
             --no-git-tag-version \
+            --no-git-checks \
             --ignore-scripts
-          npm publish --access public --dry-run --tag dry-run
+          pnpm publish --no-git-checks --access public --dry-run --tag dry-run
       - name: Publish npm package
         if: ${{ github.event.release.tag_name }}
         run: |
           DIST_TAG=$([[ "${GITHUB_REF_NAME}" == *-* ]] && echo next || echo latest)
-          cd ts &&  npm publish --access public --tag "${DIST_TAG}"
+          cd ts &&  pnpm publish --no-git-checks --access public --tag "${DIST_TAG}"

@@ -41,7 +41,7 @@ consume the TypeScript and schema layers. Do not add product-specific behavior o
 
 ## Validation
 
-Use the same Go version as in `go.mod`, Node.js from `ts/.nvmrc`, the npm version from `ts/package.json`, and Java version from `pom.xml` where applicable.
+Use the same Go version as in `go.mod`, Node.js from `ts/.nvmrc`, pnpm 12 from `ts/package.json`, and Java version from `pom.xml` where applicable.
 
 For Go and CUE changes, run the relevant checks from the repository root:
 
@@ -59,11 +59,11 @@ Run `make cue-gen` after changing Go types that produce CUE, and verify that onl
 For TypeScript changes, run from `ts/`:
 
 ```sh
-npm ci
-npm run lint
-npm run format:check
-npm run type-check
-npm run build
+pnpm install --frozen-lockfile
+pnpm lint
+pnpm format:check
+pnpm type-check
+pnpm build
 ```
 
 For Java changes, run the relevant Maven tests from `java/`, normally `mvn test` or `mvn install`. If a language
