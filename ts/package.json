@@ -46,9 +46,6 @@
   "files": [
     "dist"
   ],
-  "engines": {
-    "pnpm": ">=12"
-  },
   "devEngines": {
     "packageManager": {
       "name": "pnpm",
