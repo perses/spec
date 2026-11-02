@@ -17,7 +17,7 @@
   "types": "dist/index.d.ts",
   "sideEffects": false,
   "scripts": {
-    "build": "concurrently \"npm:build:*\"",
+    "build": "concurrently \"pnpm build:esm\" \"pnpm build:types\"",
     "build:esm": "swc ./src -d dist --strip-leading-paths --config-file ./.swcrc",
     "build:types": "tsc --project tsconfig.build.json",
     "type-check": "tsc --noEmit",
@@ -45,5 +45,20 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "engines": {
+    "pnpm": ">=12"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "^12.0.0",
+      "onFail": "ignore"
+    },
+    "runtime": {
+      "name": "node",
+      "version": "24.19.0",
+      "onFail": "download"
+    }
+  }
 }
