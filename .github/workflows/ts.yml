@@ -103,9 +103,14 @@ jobs:
           path: ts/dist
       - name: Dry run
         if: ${{ !github.event.release.tag_name }}
+        working-directory: ts
         run: |
-          DIST_TAG=$([[ "${GITHUB_REF_NAME}" == *-* ]] && echo next || echo latest)
-          cd ts &&  npm publish --access public --dry-run --tag "${DIST_TAG}"
+          npm pkg set private=true --json
+          npm version prerelease \
+            --preid="dry-run.${GITHUB_RUN_ID}.${GITHUB_RUN_ATTEMPT}" \
+            --no-git-tag-version \
+            --ignore-scripts
+          npm publish --access public --dry-run --tag dry-run
       - name: Publish npm package
         if: ${{ github.event.release.tag_name }}
         run: |
