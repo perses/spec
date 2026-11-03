@@ -23,6 +23,8 @@ package dashboard
 
 #LayoutKind: #enumLayoutKind
 
+#VisibilityOperator: #enumVisibilityOperator
+
 #LayoutSpec: #GridLayoutSpec | #TabLayoutSpec
 
 #Layout: {
