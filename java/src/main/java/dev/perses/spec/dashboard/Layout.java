@@ -66,16 +66,17 @@ public class Layout {
     }
 
     public enum VisibilityOperator {
-        @JsonProperty("=")
+        @JsonProperty("equals")
         EQUALS,
-        @JsonProperty("!=")
+        @JsonProperty("notEquals")
         NOT_EQUALS,
-        @JsonProperty("=~")
+        @JsonProperty("matches")
         MATCHES,
-        @JsonProperty("!~")
+        @JsonProperty("notMatches")
         NOT_MATCHES
     }
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class Visibility {
         @JsonProperty(value = "variable", required = true)
         public String variable;

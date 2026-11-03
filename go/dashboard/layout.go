@@ -136,10 +136,10 @@ type GridLayoutCollapse struct {
 type VisibilityOperator string
 
 const (
-	VisibilityOperatorEquals     VisibilityOperator = "="
-	VisibilityOperatorNotEquals  VisibilityOperator = "!="
-	VisibilityOperatorMatches    VisibilityOperator = "=~"
-	VisibilityOperatorNotMatches VisibilityOperator = "!~"
+	VisibilityOperatorEquals     VisibilityOperator = "equals"
+	VisibilityOperatorNotEquals  VisibilityOperator = "notEquals"
+	VisibilityOperatorMatches    VisibilityOperator = "matches"
+	VisibilityOperatorNotMatches VisibilityOperator = "notMatches"
 )
 
 var visibilityOperatorMap = map[VisibilityOperator]bool{
@@ -182,11 +182,11 @@ func (o *VisibilityOperator) validate() error {
 	return nil
 }
 
-// Visibility shows the layout only when the selected values of the variable satisfy Operator against Value.
-// = and != compare values. =~ and !~ use anchored patterns, like Prometheus label matchers.
+// Visibility shows the layout only when the variable matches.
+// equals and notEquals compare values. matches and notMatches use anchored Go regexps.
 type Visibility struct {
 	Variable string `json:"variable" yaml:"variable"`
-	// Defaults to =: at least one selected value is listed in Value.
+	// Defaults to equals.
 	Operator VisibilityOperator `json:"operator,omitempty" yaml:"operator,omitempty"`
 	Value    []string           `json:"value" yaml:"value"`
 }

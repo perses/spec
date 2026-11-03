@@ -15,7 +15,7 @@ import type { PanelRef } from './panel';
 
 export type LayoutDefinition = GridDefinition | TabDefinition;
 
-export type VisibilityOperator = '=' | '!=' | '=~' | '!~';
+export type VisibilityOperator = 'equals' | 'notEquals' | 'matches' | 'notMatches';
 
 export interface Visibility {
   variable: string;

@@ -51,17 +51,17 @@ import "github.com/perses/spec/cue/common"
 	#VisibilityOperatorMatches |
 	#VisibilityOperatorNotMatches
 
-#VisibilityOperatorEquals:     #VisibilityOperator & "="
-#VisibilityOperatorNotEquals:  #VisibilityOperator & "!="
-#VisibilityOperatorMatches:    #VisibilityOperator & "=~"
-#VisibilityOperatorNotMatches: #VisibilityOperator & "!~"
+#VisibilityOperatorEquals:     #VisibilityOperator & "equals"
+#VisibilityOperatorNotEquals:  #VisibilityOperator & "notEquals"
+#VisibilityOperatorMatches:    #VisibilityOperator & "matches"
+#VisibilityOperatorNotMatches: #VisibilityOperator & "notMatches"
 
-// Visibility shows the layout only when the selected values of the variable satisfy Operator against Value.
-// = and != compare values. =~ and !~ use anchored patterns, like Prometheus label matchers.
+// Visibility shows the layout only when the variable matches.
+// equals and notEquals compare values. matches and notMatches use anchored Go regexps.
 #Visibility: {
 	variable: string @go(Variable)
 
-	// Defaults to =: at least one selected value is listed in Value.
+	// Defaults to equals.
 	operator?: #VisibilityOperator @go(Operator)
 	value: [...string] @go(Value,[]string)
 }

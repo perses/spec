@@ -240,7 +240,7 @@ func TestUnmarshalJSONLayout(t *testing.T) {
       "title": "Background workers",
       "visibility": {
         "variable": "phase",
-        "operator": "!=",
+        "operator": "notEquals",
         "value": ["PRD"]
       }
     },
@@ -705,7 +705,7 @@ spec:
     title: "Background workers"
     visibility:
       variable: "phase"
-      operator: "!="
+      operator: notEquals
       value: ["PRD"]
   items:
   - x: 0
