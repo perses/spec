@@ -13,6 +13,8 @@
 
 package dashboard
 
+import "strings"
+
 legacyLink: #Link & {name: "todo"}
 emptyURLLink: #Link & {name: "todo", url: ""}
 nbspURLLink: #Link & {url: "\u00a0"}
@@ -32,3 +34,4 @@ tagLink: #Link & {
 	targetBlank:      true
 }
 nullTagsLink: #Link & {name: "Docs", url: "https://perses.dev", tags: null}
+paddedTagLink: #Link & {name: "Traffic", tags: [" \(strings.Repeat("a", 50)) "]}

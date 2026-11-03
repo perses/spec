@@ -43,7 +43,7 @@ import "strings"
 	includeVariables?: bool @go(IncludeVariables)
 	if tags != _|_ if tags != null if len(tags) > 0 {
 		// strings.Count(s, "") is one more than the number of Unicode code points.
-		_tooLong: [ for tag in tags if strings.Count(tag, "")-1 > #maxTagRunes {tag}] & []
+		_tooLong: [ for tag in tags if strings.Count(strings.TrimSpace(tag), "")-1 > #maxTagRunes {tag}] & []
 		name: !~#blank
 		// A tag menu has no URL. renderVariables only interpolates $var inside a URL.
 		url?: =~#blank

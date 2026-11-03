@@ -49,6 +49,21 @@ describe('linkSchema', () => {
       },
       output: { name: 'Service detail', tags: ['traffic', 'billing'], keepTime: true, includeVariables: true },
     },
+    {
+      name: 'nel-padded tag',
+      input: { name: 'Traffic', tags: ['\u0085traffic\u0085'] },
+      output: { name: 'Traffic', tags: ['traffic'] },
+    },
+    {
+      name: 'bom tag',
+      input: { name: 'Traffic', tags: ['\ufefftraffic'] },
+      output: { name: 'Traffic', tags: ['\ufefftraffic'] },
+    },
+    {
+      name: 'trimmed tag length',
+      input: { name: 'Traffic', tags: [` ${'a'.repeat(50)} `] },
+      output: { name: 'Traffic', tags: ['a'.repeat(50)] },
+    },
   ])('normalizes a $name link', ({ input, output }) => {
     const parsed = linkSchema.parse(input);
     expect(parsed).toEqual(output);
@@ -64,6 +79,7 @@ describe('linkSchema', () => {
     { name: 'neither', input: { name: 'Docs' }, output: { name: 'Docs', url: '' } },
     { name: 'blank url', input: { name: 'todo', url: '' }, output: { name: 'todo', url: '' } },
     { name: 'whitespace url', input: { url: '   ' }, output: { url: '' } },
+    { name: 'null tags', input: { url: 'https://perses.dev', tags: null }, output: { url: 'https://perses.dev' } },
   ])('keeps a $name placeholder', ({ input, output }) => {
     const parsed = linkSchema.parse(input);
     expect(parsed).toEqual(output);
@@ -91,6 +107,7 @@ describe('linkSchema', () => {
     ],
     [{ name: 'Traffic', tags: ['a'.repeat(51)] }, 'cannot contain more than 50 characters'],
     [{ name: 'Traffic', tags: ['é'.repeat(51)] }, 'cannot contain more than 50 characters'],
+    [{ name: 'Traffic', tags: ['\u0085'] }, 'link tag must not be empty'],
   ])('rejects %j', (input, message) => {
     expect(() => linkSchema.parse(input)).toThrow(message);
   });

@@ -37,16 +37,16 @@ const linkInputSchema = z.object({
   tooltip: z.string().optional(),
   renderVariables: z.boolean().optional(),
   targetBlank: z.boolean().optional(),
-  tags: z.array(z.string()).optional(),
+  tags: z.array(z.string()).nullish(),
   keepTime: z.boolean().optional(),
   includeVariables: z.boolean().optional(),
 });
 
 export const linkSchema: z.ZodType<Link, z.input<typeof linkInputSchema>> = linkInputSchema
   .superRefine((link, ctx) => {
-    const url = link.url?.trim() ?? '';
-    const name = link.name?.trim() ?? '';
-    const tags = (link.tags ?? []).map((tag) => tag.trim()).filter((tag) => tag.length > 0);
+    const url = trimGo(link.url ?? '');
+    const name = trimGo(link.name ?? '');
+    const tags = (link.tags ?? []).map(trimGo).filter((tag) => tag.length > 0);
     const rawTagCount = link.tags?.length ?? 0;
     if (rawTagCount > 0 && tags.length !== rawTagCount) {
       ctx.addIssue({ code: 'custom', message: 'link tag must not be empty' });
@@ -73,9 +73,9 @@ export const linkSchema: z.ZodType<Link, z.input<typeof linkInputSchema>> = link
     }
   })
   .transform((link): Link => {
-    const url = link.url?.trim() ?? '';
-    const name = link.name?.trim() || undefined;
-    const tags = (link.tags ?? []).map((tag) => tag.trim()).filter((tag) => tag.length > 0);
+    const url = trimGo(link.url ?? '');
+    const name = trimGo(link.name ?? '') || undefined;
+    const tags = (link.tags ?? []).map(trimGo).filter((tag) => tag.length > 0);
     const shared = definedFields({
       tooltip: link.tooltip,
       keepTime: link.keepTime,
@@ -87,6 +87,10 @@ export const linkSchema: z.ZodType<Link, z.input<typeof linkInputSchema>> = link
     }
     return { ...shared, ...definedFields({ name, renderVariables: link.renderVariables }), url };
   });
+
+function trimGo(value: string): string {
+  return value.replace(/^[\t\n\v\f\r\u0085\p{Z}]+|[\t\n\v\f\r\u0085\p{Z}]+$/gu, '');
+}
 
 function definedFields<T extends Record<string, unknown>>(fields: T): { [K in keyof T]?: T[K] } {
   return Object.fromEntries(Object.entries(fields).filter(([, value]) => value !== undefined)) as {
