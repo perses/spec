@@ -6,14 +6,6 @@ package dashboard
 
 import plugin_9 "github.com/perses/spec/cue/plugin"
 
-#Link: {
-	name?:            string @go(Name)
-	url:              string @go(URL)
-	tooltip?:         string @go(Tooltip)
-	renderVariables?: bool   @go(RenderVariables)
-	targetBlank?:     bool   @go(TargetBlank)
-}
-
 #PanelDisplay: {
 	name?:        string @go(Name)
 	description?: string @go(Description)

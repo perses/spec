@@ -15,6 +15,7 @@ package dev.perses.spec.dashboard;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import dev.perses.spec.dashboard.panel.Link;
 import org.junit.jupiter.api.Test;
 
 import java.io.InputStream;
@@ -104,5 +105,36 @@ public class SpecUnmarshalTest {
         assertTrue(d.datasources.containsKey("prom"));
         assertNotNull(d.variables);
         assertEquals(0, d.variables.size());
+    }
+
+    @Test
+    public void testUnmarshalTagLinkAndEmptyURL() throws Exception {
+        String json = """
+                {
+                  "panels": {},
+                  "layouts": [],
+                  "duration": null,
+                  "links": [
+                    {"name": "Traffic", "tags": ["traffic"], "keepTime": true, "includeVariables": true, "targetBlank": true},
+                    {"name": "todo", "url": ""}
+                  ]
+                }
+                """;
+
+        Spec dashboard = mapper.readValue(json, Spec.class);
+        assertEquals(2, dashboard.Links.size());
+
+        Link tagLink = dashboard.Links.get(0);
+        assertEquals("Traffic", tagLink.name);
+        assertEquals(List.of("traffic"), tagLink.tags);
+        assertEquals(Boolean.TRUE, tagLink.keepTime);
+        assertEquals(Boolean.TRUE, tagLink.includeVariables);
+        assertEquals(Boolean.TRUE, tagLink.targetBlank);
+        assertNull(tagLink.url);
+
+        Link urlLink = dashboard.Links.get(1);
+        assertEquals("todo", urlLink.name);
+        assertEquals("", urlLink.url);
+        assertNull(urlLink.tags);
     }
 }
