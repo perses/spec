@@ -56,7 +56,10 @@ export const linkSchema: z.ZodType<Link, z.input<typeof linkInputSchema>> = link
     const maxTagRunes = 50;
     for (const tag of tags) {
       if ([...tag].length > maxTagRunes) {
-        ctx.addIssue({ code: 'custom', message: `tag ${JSON.stringify(tag)} cannot contain more than ${maxTagRunes} characters` });
+        ctx.addIssue({
+          code: 'custom',
+          message: `tag ${JSON.stringify(tag)} cannot contain more than ${maxTagRunes} characters`,
+        });
       }
     }
     if (tags.length > maxTags) {
