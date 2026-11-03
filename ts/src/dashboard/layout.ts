@@ -15,6 +15,14 @@ import type { PanelRef } from './panel';
 
 export type LayoutDefinition = GridDefinition | TabDefinition;
 
+export type VisibilityOperator = 'equals' | 'notEquals' | 'matches' | 'notMatches';
+
+export interface Visibility {
+  variable: string;
+  operator?: VisibilityOperator;
+  value: string[];
+}
+
 export interface GridDefinition {
   kind: 'Grid';
   spec: {
@@ -23,6 +31,7 @@ export interface GridDefinition {
       collapse?: {
         open: boolean;
       };
+      visibility?: Visibility;
     };
     items: GridItemDefinition[];
     repeatVariable?: string;
