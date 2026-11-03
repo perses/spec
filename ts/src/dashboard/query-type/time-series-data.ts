@@ -46,6 +46,23 @@ export interface Exemplar {
   labels: Labels;
   value: number;
   timestamp: UnixTimeMs;
+  /**
+   * Links related to this exemplar (e.g. to a tracing UI), computed by the query
+   * plugin from the datasource exemplars configuration (URL template + trace ID
+   * label). Optional so plugins that don't support links keep the payload unchanged.
+   */
+  links?: ExemplarLink[];
+}
+
+/**
+ * A link attached to an exemplar, pointing to an external or internal tool
+ * (e.g. a tracing UI) with the trace ID already interpolated in the URL.
+ */
+export interface ExemplarLink {
+  /** Optional display label for the link (e.g. shown on the button in the tooltip). */
+  name?: string;
+  /** Final URL, with variables and trace ID placeholders already resolved. */
+  url: string;
 }
 
 export interface TimeSeriesExemplars {
