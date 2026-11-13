@@ -21,6 +21,7 @@ package plugin
 	#KindAlertsQuery |
 	#KindSilencesQuery |
 	#KindJsonQuery |
+	#KindExpressionQuery |
 	#KindExplore |
 	#KindAnnotation
 
@@ -35,6 +36,7 @@ package plugin
 #KindAlertsQuery:     #Kind & "AlertsQuery"
 #KindSilencesQuery:   #Kind & "SilencesQuery"
 #KindJsonQuery:       #Kind & "JsonQuery"
+#KindExpressionQuery: #Kind & "ExpressionQuery"
 #KindExplore:         #Kind & "Explore"
 #KindAnnotation:      #Kind & "Annotation"
 
