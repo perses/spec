@@ -117,9 +117,17 @@ func (d *Spec) validate() error {
 			return fmt.Errorf("variable %q (index %d) already exists", name, i)
 		}
 	}
-	for panelKey := range d.Panels {
+	for panelKey, panel := range d.Panels {
 		if err := common.ValidateID(panelKey); err != nil {
 			return err
+		}
+		if panel == nil {
+			return fmt.Errorf("panel %q must not be null", panelKey)
+		}
+	}
+	for datasourceKey, datasourceSpec := range d.Datasources {
+		if datasourceSpec == nil {
+			return fmt.Errorf("datasource %q must not be null", datasourceKey)
 		}
 	}
 	if len(d.Duration) == 0 {
