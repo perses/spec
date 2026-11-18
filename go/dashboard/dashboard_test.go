@@ -51,6 +51,12 @@ func TestUnmarshalSpec(t *testing.T) {
 			yaml:    "datasources:\n  prom:\npanels: {}\n",
 			wantErr: `datasource "prom" must not be null`,
 		},
+		{
+			name:    "layout item without content",
+			json:    `{"panels":{},"layouts":[{"kind":"Grid","spec":{"items":[{"x":0,"y":0,"width":1,"height":1}]}}]}`,
+			yaml:    "{panels: {}, layouts: [{kind: Grid, spec: {items: [{x: 0, y: 0, width: 1, height: 1}]}}]}",
+			wantErr: "layout.spec.items[0].content cannot be empty",
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

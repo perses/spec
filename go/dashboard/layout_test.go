@@ -577,6 +577,41 @@ func TestUnmarshalJSONLayout(t *testing.T) {
 			}`,
 			errorMsg: "unknown visibility.operator",
 		},
+		{
+			title:    "grid item without content",
+			jason:    `{"kind": "Grid", "spec": {"items": [{"x": 0, "y": 0, "width": 1, "height": 1}]}}`,
+			errorMsg: "layout.spec.items[0].content cannot be empty",
+		},
+		{
+			title:    "grid item with null content",
+			jason:    `{"kind": "Grid", "spec": {"items": [{"x": 0, "y": 0, "width": 1, "height": 1, "content": null}]}}`,
+			errorMsg: "layout.spec.items[0].content cannot be empty",
+		},
+		{
+			title:    "tab item without content",
+			jason:    `{"kind": "Tabs", "spec": {"tabs": [{"name": "t", "items": [{"x": 0, "y": 0, "width": 1, "height": 1}]}]}}`,
+			errorMsg: "layout.spec.tabs[0].items[0].content cannot be empty",
+		},
+		{
+			title: "tab item with null content in a later tab",
+			jason: `
+			{
+			  "kind": "Tabs",
+			  "spec": {
+				"tabs": [
+				  { "name": "first", "items": [] },
+				  {
+					"name": "second",
+					"items": [
+					  { "x": 0, "y": 0, "width": 1, "height": 1, "content": { "$ref": "#/panels/p1" } },
+					  { "x": 1, "y": 0, "width": 1, "height": 1, "content": null }
+					]
+				  }
+				]
+			  }
+			}`,
+			errorMsg: "layout.spec.tabs[1].items[1].content cannot be empty",
+		},
 	}
 	for _, test := range errorTestSuite {
 		t.Run(test.title, func(t *testing.T) {
@@ -1000,6 +1035,72 @@ spec:
   items: []
 `,
 			errorMsg: "unknown visibility.operator",
+		},
+		{
+			title: "grid item without content",
+			yamele: `
+kind: "Grid"
+spec:
+  items:
+  - x: 0
+    y: 0
+    width: 1
+    height: 1
+`,
+			errorMsg: "layout.spec.items[0].content cannot be empty",
+		},
+		{
+			title: "grid item with null content",
+			yamele: `
+kind: "Grid"
+spec:
+  items:
+  - x: 0
+    y: 0
+    width: 1
+    height: 1
+    content: null
+`,
+			errorMsg: "layout.spec.items[0].content cannot be empty",
+		},
+		{
+			title: "tab item without content",
+			yamele: `
+kind: "Tabs"
+spec:
+  tabs:
+  - name: "t"
+    items:
+    - x: 0
+      y: 0
+      width: 1
+      height: 1
+`,
+			errorMsg: "layout.spec.tabs[0].items[0].content cannot be empty",
+		},
+		{
+			title: "tab item with null content in a later tab",
+			yamele: `
+kind: "Tabs"
+spec:
+  tabs:
+  - name: "first"
+    items: []
+  - name: "second"
+    items:
+    - x: 0
+      y: 0
+      width: 1
+      height: 1
+      content:
+        $ref: "#/panels/p1"
+    - x: 1
+      y: 0
+      width: 1
+      height: 1
+      content: null
+`,
+			errorMsg: "layout.spec.tabs[1].items[1].content cannot be empty",
 		},
 	}
 	for _, test := range errorTestSuite {

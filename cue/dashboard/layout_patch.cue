@@ -21,9 +21,15 @@
 
 package dashboard
 
+import "github.com/perses/spec/cue/common"
+
 #LayoutKind: #enumLayoutKind
 
 #VisibilityOperator: #enumVisibilityOperator
+
+// `cue get go` generates an optional and nullable field from the *JSONRef pointer,
+// but a grid item must always reference a panel.
+#GridItem: content!: common.#JSONRef
 
 #LayoutSpec: #GridLayoutSpec | #TabLayoutSpec
 
