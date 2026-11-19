@@ -278,6 +278,34 @@ func (d *Layout) unmarshal(unmarshal func(any) error, staticMarshal func(any) ([
 	if err := staticUnmarshal(rawParameter, spec); err != nil {
 		return err
 	}
+	if err := validateLayoutSpec(spec); err != nil {
+		return err
+	}
 	d.Spec = spec
+	return nil
+}
+
+func validateLayoutSpec(spec any) error {
+	switch s := spec.(type) {
+	case *GridLayoutSpec:
+		return validateGridItems(s.Items, "layout.spec.items")
+	case *TabLayoutSpec:
+		for i, tab := range s.Tabs {
+			if err := validateGridItems(tab.Items, fmt.Sprintf("layout.spec.tabs[%d].items", i)); err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
+
+// validateGridItems rejects items without content: a missing or null "content" leaves a nil pointer
+// that the JSONRef unmarshaller never sees, so it has to be checked by the owner of the items.
+func validateGridItems(items []GridItem, path string) error {
+	for i, item := range items {
+		if item.Content == nil {
+			return fmt.Errorf("%s[%d].content cannot be empty", path, i)
+		}
+	}
 	return nil
 }

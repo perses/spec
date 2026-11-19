@@ -54,7 +54,7 @@ public class Layout {
         public int width;
         @JsonProperty("height")
         public int height;
-        @JsonProperty("content")
+        @JsonProperty(value = "content", required = true)
         public JSONRef content;
         @JsonProperty("repeatVariable")
         public RepeatVariable repeatVariable;
