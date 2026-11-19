@@ -18,6 +18,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"gopkg.in/yaml.v3"
 )
 
@@ -567,4 +568,20 @@ func TestPostgresConfigValidation(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestMarshalJSONProxy(t *testing.T) {
+	proxy := Proxy{
+		Kind: ProxyKindName,
+		Spec: Config{
+			Driver:   DriverPostgreSQL,
+			Host:     "localhost:5432",
+			Database: "mydb",
+		},
+	}
+
+	data, err := json.Marshal(proxy)
+	require.NoError(t, err)
+	// The kind must be the one required by the CUE schema, otherwise the datasource is rejected.
+	assert.JSONEq(t, `{"kind":"SQLProxy","spec":{"driver":"postgres","host":"localhost:5432","database":"mydb"}}`, string(data))
 }

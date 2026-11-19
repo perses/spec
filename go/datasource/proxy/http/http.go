@@ -136,5 +136,7 @@ func (h *Config) validate() error {
 type Proxy proxy.Proxy[Config]
 
 const (
-	ProxyKindName = "httpproxy"
+	// ProxyKindName is the kind of the HTTP proxy. Use it to fill the field Kind of a Proxy,
+	// as the schema only accepts this exact value.
+	ProxyKindName = "HTTPProxy"
 )

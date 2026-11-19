@@ -14,4 +14,6 @@ import "github.com/perses/spec/cue/datasource/proxy"
 // In case you are defining a datasource that will work with the Perses backend, then you will need to use this definition.
 #Proxy: proxy.#Proxy
 
-#ProxyKindName: "httpproxy"
+// ProxyKindName is the kind of the HTTP proxy. Use it to fill the field Kind of a Proxy,
+// as the schema only accepts this exact value.
+#ProxyKindName: "HTTPProxy"
