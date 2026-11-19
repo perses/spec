@@ -22,6 +22,7 @@ import (
 
 	"github.com/perses/spec/go/common"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"gopkg.in/yaml.v3"
 )
 
@@ -473,4 +474,16 @@ method: POST
 			assert.Equal(t, test.result, string(data))
 		})
 	}
+}
+
+func TestMarshalJSONProxy(t *testing.T) {
+	proxy := Proxy{
+		Kind: ProxyKindName,
+		Spec: Config{URL: common.MustParseURL("http://localhost:9090")},
+	}
+
+	data, err := json.Marshal(proxy)
+	require.NoError(t, err)
+	// The kind must be the one required by the CUE schema, otherwise the datasource is rejected.
+	assert.JSONEq(t, `{"kind":"HTTPProxy","spec":{"url":"http://localhost:9090"}}`, string(data))
 }

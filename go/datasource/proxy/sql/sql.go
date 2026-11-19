@@ -205,5 +205,7 @@ func (s *Config) verifySupportedDriver() error {
 type Proxy proxy.Proxy[Config]
 
 const (
-	ProxyKindName = "sqlproxy"
+	// ProxyKindName is the kind of the SQL proxy. Use it to fill the field Kind of a Proxy,
+	// as the schema only accepts this exact value.
+	ProxyKindName = "SQLProxy"
 )

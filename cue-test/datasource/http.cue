@@ -70,3 +70,13 @@ myZeroTimeoutProxySpec: #HTTPDatasourceSpec & {
 		}
 	}
 }
+
+// The kind name generated from the Go constant must be accepted by the schema.
+myGoKindNameProxySpec: #HTTPDatasourceSpec & {
+	proxy: http.#Proxy & {
+		kind: http.#ProxyKindName
+		spec: {
+			url: "https://prometheus.demo.prometheus.io"
+		}
+	}
+}

@@ -27,3 +27,15 @@ mySQLProxySpec: #SQLDatasourceSpec & {
 		}
 	}
 }
+
+// The kind name generated from the Go constant must be accepted by the schema.
+myGoKindNameSQLProxySpec: #SQLDatasourceSpec & {
+	proxy: sql.#Proxy & {
+		kind: sql.#ProxyKindName
+		spec: {
+			driver:   "postgres"
+			host:     "localhost:5432"
+			database: "mydb"
+		}
+	}
+}

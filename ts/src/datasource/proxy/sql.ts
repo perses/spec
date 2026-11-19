@@ -14,7 +14,7 @@
 import type { DurationString } from '../../common/duration';
 
 export interface SQLProxy {
-  kind: 'sqlproxy';
+  kind: 'SQLProxy';
   spec: SQLProxySpec;
 }
 
