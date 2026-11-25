@@ -20,7 +20,10 @@ export type TimeSeriesQueryDefinition<PluginSpec = UnknownSpec> = QueryDefinitio
  * A query computed from the results of other queries of the same panel (e.g. a math expression). It returns
  * TimeSeriesData, like a TimeSeriesQuery.
  */
-export type ExpressionQueryDefinition<PluginSpec = UnknownSpec> = QueryDefinition<'ExpressionQuery', PluginSpec>;
+export type TimeSeriesExpressionQueryDefinition<PluginSpec = UnknownSpec> = QueryDefinition<
+  'TimeSeriesExpressionQuery',
+  PluginSpec
+>;
 
 export type TimeSeriesValueTuple = [timestamp: UnixTimeMs, value: number | null];
 

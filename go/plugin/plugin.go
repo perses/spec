@@ -26,37 +26,37 @@ const (
 type Kind string
 
 const (
-	KindVariable        Kind = "Variable"
-	KindDatasource      Kind = "Datasource"
-	KindPanel           Kind = "Panel"
-	KindTimeSeriesQuery Kind = "TimeSeriesQuery"
-	KindTraceQuery      Kind = "TraceQuery"
-	KindProfileQuery    Kind = "ProfileQuery"
-	KindLogQuery        Kind = "LogQuery"
-	KindQuery           Kind = "Query"
-	KindAlertsQuery     Kind = "AlertsQuery"
-	KindSilencesQuery   Kind = "SilencesQuery"
-	KindJsonQuery       Kind = "JsonQuery"
-	KindExpressionQuery Kind = "ExpressionQuery"
-	KindExplore         Kind = "Explore"
-	KindAnnotation      Kind = "Annotation"
+	KindVariable                  Kind = "Variable"
+	KindDatasource                Kind = "Datasource"
+	KindPanel                     Kind = "Panel"
+	KindTimeSeriesQuery           Kind = "TimeSeriesQuery"
+	KindTraceQuery                Kind = "TraceQuery"
+	KindProfileQuery              Kind = "ProfileQuery"
+	KindLogQuery                  Kind = "LogQuery"
+	KindQuery                     Kind = "Query"
+	KindAlertsQuery               Kind = "AlertsQuery"
+	KindSilencesQuery             Kind = "SilencesQuery"
+	KindJsonQuery                 Kind = "JsonQuery"
+	KindTimeSeriesExpressionQuery Kind = "TimeSeriesExpressionQuery"
+	KindExplore                   Kind = "Explore"
+	KindAnnotation                Kind = "Annotation"
 )
 
 var KindMap = map[Kind]bool{
-	KindVariable:        true,
-	KindDatasource:      true,
-	KindPanel:           true,
-	KindTimeSeriesQuery: true,
-	KindTraceQuery:      true,
-	KindProfileQuery:    true,
-	KindLogQuery:        true,
-	KindQuery:           true,
-	KindAlertsQuery:     true,
-	KindSilencesQuery:   true,
-	KindJsonQuery:       true,
-	KindExpressionQuery: true,
-	KindExplore:         true,
-	KindAnnotation:      true,
+	KindVariable:                  true,
+	KindDatasource:                true,
+	KindPanel:                     true,
+	KindTimeSeriesQuery:           true,
+	KindTraceQuery:                true,
+	KindProfileQuery:              true,
+	KindLogQuery:                  true,
+	KindQuery:                     true,
+	KindAlertsQuery:               true,
+	KindSilencesQuery:             true,
+	KindJsonQuery:                 true,
+	KindTimeSeriesExpressionQuery: true,
+	KindExplore:                   true,
+	KindAnnotation:                true,
 }
 
 func (k Kind) IsQuery() bool {
@@ -68,7 +68,7 @@ func (k Kind) IsQuery() bool {
 		k == KindAlertsQuery ||
 		k == KindSilencesQuery ||
 		k == KindJsonQuery ||
-		k == KindExpressionQuery
+		k == KindTimeSeriesExpressionQuery
 }
 
 type Metadata struct {
