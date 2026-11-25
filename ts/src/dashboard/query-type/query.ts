@@ -45,6 +45,7 @@ export interface QueryType {
   AlertsQuery: AlertsData;
   SilencesQuery: SilencesData;
   JsonQuery: JsonData;
+  TimeSeriesExpressionQuery: TimeSeriesData;
 }
 
 /**
@@ -60,6 +61,7 @@ export function isValidQueryPluginType(type: string): type is QueryPluginType {
     'AlertsQuery',
     'SilencesQuery',
     'JsonQuery',
+    'TimeSeriesExpressionQuery',
   ].includes(type as QueryPluginType);
 }
 

@@ -21,22 +21,24 @@ package plugin
 	#KindAlertsQuery |
 	#KindSilencesQuery |
 	#KindJsonQuery |
+	#KindTimeSeriesExpressionQuery |
 	#KindExplore |
 	#KindAnnotation
 
-#KindVariable:        #Kind & "Variable"
-#KindDatasource:      #Kind & "Datasource"
-#KindPanel:           #Kind & "Panel"
-#KindTimeSeriesQuery: #Kind & "TimeSeriesQuery"
-#KindTraceQuery:      #Kind & "TraceQuery"
-#KindProfileQuery:    #Kind & "ProfileQuery"
-#KindLogQuery:        #Kind & "LogQuery"
-#KindQuery:           #Kind & "Query"
-#KindAlertsQuery:     #Kind & "AlertsQuery"
-#KindSilencesQuery:   #Kind & "SilencesQuery"
-#KindJsonQuery:       #Kind & "JsonQuery"
-#KindExplore:         #Kind & "Explore"
-#KindAnnotation:      #Kind & "Annotation"
+#KindVariable:                  #Kind & "Variable"
+#KindDatasource:                #Kind & "Datasource"
+#KindPanel:                     #Kind & "Panel"
+#KindTimeSeriesQuery:           #Kind & "TimeSeriesQuery"
+#KindTraceQuery:                #Kind & "TraceQuery"
+#KindProfileQuery:              #Kind & "ProfileQuery"
+#KindLogQuery:                  #Kind & "LogQuery"
+#KindQuery:                     #Kind & "Query"
+#KindAlertsQuery:               #Kind & "AlertsQuery"
+#KindSilencesQuery:             #Kind & "SilencesQuery"
+#KindJsonQuery:                 #Kind & "JsonQuery"
+#KindTimeSeriesExpressionQuery: #Kind & "TimeSeriesExpressionQuery"
+#KindExplore:                   #Kind & "Explore"
+#KindAnnotation:                #Kind & "Annotation"
 
 #Metadata: {
 	// Version is optional. If not provided, it means the latest version available in the Perses instance.

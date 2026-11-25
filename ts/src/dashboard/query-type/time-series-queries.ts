@@ -16,6 +16,15 @@ import type { QueryDefinition } from './query';
 
 export type TimeSeriesQueryDefinition<PluginSpec = UnknownSpec> = QueryDefinition<'TimeSeriesQuery', PluginSpec>;
 
+/**
+ * A query computed from the results of other queries of the same panel (e.g. a math expression). It returns
+ * TimeSeriesData, like a TimeSeriesQuery.
+ */
+export type TimeSeriesExpressionQueryDefinition<PluginSpec = UnknownSpec> = QueryDefinition<
+  'TimeSeriesExpressionQuery',
+  PluginSpec
+>;
+
 export type TimeSeriesValueTuple = [timestamp: UnixTimeMs, value: number | null];
 
 export type BucketTuple = [number, string, string, string]; // [bucket, upperBound, lowerBound, count]
