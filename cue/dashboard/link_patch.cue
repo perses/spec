@@ -41,6 +41,8 @@ import "strings"
 	// Both kinds. A URL copies every current variable. A tag menu copies variables the destination declares.
 	keepTime?:         bool @go(KeepTime)
 	includeVariables?: bool @go(IncludeVariables)
+	// Empty means the header menu. data is bound to a category, a series, or a field.
+	placement?: #LinkPlacement @go(Placement)
 	if tags != _|_ if tags != null if len(tags) > 0 {
 		// strings.Count(s, "") is one more than the number of Unicode code points.
 		_tooLong: [ for tag in tags if strings.Count(strings.TrimSpace(tag), "")-1 > #maxTagRunes {tag}] & []
@@ -52,3 +54,6 @@ import "strings"
 		}
 	}
 }
+
+// Close the generated string. cue get go cannot emit the enum.
+#LinkPlacement: #enumLinkPlacement

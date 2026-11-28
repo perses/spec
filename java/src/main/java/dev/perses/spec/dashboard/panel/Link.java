@@ -44,6 +44,16 @@ public class Link {
     @JsonProperty("includeVariables")
     public Boolean includeVariables;
 
+    @JsonProperty("placement")
+    public LinkPlacement placement;
+
+    public enum LinkPlacement {
+        @JsonProperty("header")
+        HEADER,
+        @JsonProperty("data")
+        DATA
+    }
+
     public Link() {
     }
 }

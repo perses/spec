@@ -87,6 +87,19 @@ describe('linkSchema', () => {
     expect(Object.values(parsed).every((value) => value !== undefined)).toBe(true);
   });
 
+  it('keeps an explicit placement and omits it when absent', () => {
+    expect(linkSchema.parse({ url: 'https://perses.dev', placement: 'data' })).toEqual({
+      url: 'https://perses.dev',
+      placement: 'data',
+    });
+    expect(linkSchema.parse({ name: 'Traffic', tags: ['traffic'], placement: 'header' })).toEqual({
+      name: 'Traffic',
+      tags: ['traffic'],
+      placement: 'header',
+    });
+    expect(linkSchema.parse({ url: 'https://perses.dev' })).not.toHaveProperty('placement');
+  });
+
   it('omits undefined keys', () => {
     expect(Object.keys(linkSchema.parse({ url: 'https://perses.dev' }))).toEqual(['url']);
     expect(Object.keys(linkSchema.parse({ name: 'Traffic', tags: ['traffic'], targetBlank: true })).sort()).toEqual([
@@ -108,6 +121,7 @@ describe('linkSchema', () => {
     [{ name: 'Traffic', tags: ['a'.repeat(51)] }, 'cannot contain more than 50 characters'],
     [{ name: 'Traffic', tags: ['é'.repeat(51)] }, 'cannot contain more than 50 characters'],
     [{ name: 'Traffic', tags: ['\u0085'] }, 'link tag must not be empty'],
+    [{ url: 'https://perses.dev', placement: 'panel' }, 'Invalid option'],
   ])('rejects %j', (input, message) => {
     expect(() => linkSchema.parse(input)).toThrow(message);
   });

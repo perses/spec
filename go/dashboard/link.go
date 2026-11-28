@@ -28,15 +28,31 @@ import (
 // When Tags is set, URL must be empty, every tag must be non-empty, and Name is required.
 // KeepTime, IncludeVariables and TargetBlank apply to both.
 // RenderVariables only interpolates $var inside a URL, so a tag menu cannot set it.
+// Placement chooses the header menu or a data anchor. Empty means the header menu.
 type Link struct {
-	Name             string   `json:"name,omitempty" yaml:"name,omitempty"`
-	URL              string   `json:"url,omitempty" yaml:"url,omitempty"`
-	Tooltip          string   `json:"tooltip,omitempty" yaml:"tooltip,omitempty"`
-	RenderVariables  bool     `json:"renderVariables,omitempty" yaml:"renderVariables,omitempty"`
-	TargetBlank      bool     `json:"targetBlank,omitempty" yaml:"targetBlank,omitempty"`
-	Tags             []string `json:"tags,omitempty" yaml:"tags,omitempty"`
-	KeepTime         bool     `json:"keepTime,omitempty" yaml:"keepTime,omitempty"`
-	IncludeVariables bool     `json:"includeVariables,omitempty" yaml:"includeVariables,omitempty"`
+	Name             string        `json:"name,omitempty" yaml:"name,omitempty"`
+	URL              string        `json:"url,omitempty" yaml:"url,omitempty"`
+	Tooltip          string        `json:"tooltip,omitempty" yaml:"tooltip,omitempty"`
+	RenderVariables  bool          `json:"renderVariables,omitempty" yaml:"renderVariables,omitempty"`
+	TargetBlank      bool          `json:"targetBlank,omitempty" yaml:"targetBlank,omitempty"`
+	Tags             []string      `json:"tags,omitempty" yaml:"tags,omitempty"`
+	KeepTime         bool          `json:"keepTime,omitempty" yaml:"keepTime,omitempty"`
+	IncludeVariables bool          `json:"includeVariables,omitempty" yaml:"includeVariables,omitempty"`
+	Placement        LinkPlacement `json:"placement,omitempty" yaml:"placement,omitempty"`
+}
+
+// LinkPlacement says where a link is drawn.
+// header is the panel or dashboard menu. data is bound to a category, a series, or a field.
+type LinkPlacement string
+
+const (
+	LinkPlacementHeader LinkPlacement = "header"
+	LinkPlacementData   LinkPlacement = "data"
+)
+
+var linkPlacementMap = map[LinkPlacement]bool{
+	LinkPlacementHeader: true,
+	LinkPlacementData:   true,
 }
 
 func (l *Link) UnmarshalJSON(data []byte) error {
@@ -129,6 +145,11 @@ func (l *Link) validate() error {
 	}
 	if len(l.Tags) > 0 && l.Name == "" {
 		return errors.New("a tag link must set a name")
+	}
+	if l.Placement != "" {
+		if _, ok := linkPlacementMap[l.Placement]; !ok {
+			return fmt.Errorf("unknown link.placement %q used", l.Placement)
+		}
 	}
 	return nil
 }

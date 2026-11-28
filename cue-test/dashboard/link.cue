@@ -35,3 +35,6 @@ tagLink: #Link & {
 }
 nullTagsLink: #Link & {name: "Docs", url: "https://perses.dev", tags: null}
 paddedTagLink: #Link & {name: "Traffic", tags: [" \(strings.Repeat("a", 50)) "]}
+headerLink: #Link & {name: "Docs", url: "https://perses.dev", placement: "header"}
+dataLink: #Link & {url: "https://perses.dev", placement: "data"}
+dataTagLink: #Link & {name: "Traffic", tags: ["traffic"], placement: "data"}

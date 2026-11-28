@@ -136,5 +136,33 @@ public class SpecUnmarshalTest {
         assertEquals("todo", urlLink.name);
         assertEquals("", urlLink.url);
         assertNull(urlLink.tags);
+        assertNull(urlLink.placement);
+    }
+
+    @Test
+    public void testUnmarshalLinkPlacement() throws Exception {
+        String json = """
+                {
+                  "panels": {},
+                  "layouts": [],
+                  "duration": "1h",
+                  "links": [
+                    {"name": "Category", "url": "https://perses.dev", "placement": "data"}
+                  ]
+                }
+                """;
+
+        Spec dashboard = mapper.readValue(json, Spec.class);
+        assertEquals(Link.LinkPlacement.DATA, dashboard.Links.get(0).placement);
+
+        String unknown = """
+                {
+                  "panels": {},
+                  "layouts": [],
+                  "duration": "1h",
+                  "links": [{"url": "https://perses.dev", "placement": "panel"}]
+                }
+                """;
+        assertThrows(InvalidFormatException.class, () -> mapper.readValue(unknown, Spec.class));
     }
 }

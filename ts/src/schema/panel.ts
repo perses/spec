@@ -40,6 +40,7 @@ const linkInputSchema = z.object({
   tags: z.array(z.string()).nullish(),
   keepTime: z.boolean().optional(),
   includeVariables: z.boolean().optional(),
+  placement: z.enum(['header', 'data']).optional(),
 });
 
 export const linkSchema: z.ZodType<Link, z.input<typeof linkInputSchema>> = linkInputSchema
@@ -84,6 +85,7 @@ export const linkSchema: z.ZodType<Link, z.input<typeof linkInputSchema>> = link
       keepTime: link.keepTime,
       includeVariables: link.includeVariables,
       targetBlank: link.targetBlank,
+      placement: link.placement,
     });
     if (tags.length > 0) {
       return { ...shared, name: name ?? '', tags };
