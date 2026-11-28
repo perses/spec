@@ -9,4 +9,5 @@ package dashboard
 // When Tags is set, URL must be empty, every tag must be non-empty, and Name is required.
 // KeepTime, IncludeVariables and TargetBlank apply to both.
 // RenderVariables only interpolates $var inside a URL, so a tag menu cannot set it.
+// Placement chooses the header menu or a data anchor. Empty means the header menu.
 #Link: _

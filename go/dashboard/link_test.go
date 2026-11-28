@@ -102,6 +102,30 @@ func TestUnmarshalLink(t *testing.T) {
 			yaml:    "{name: Traffic, tags: [traffic], renderVariables: true}",
 			wantErr: "renderVariables is only valid on a URL link",
 		},
+		{
+			name: "header placement",
+			json: `{"name":"Docs","url":"https://perses.dev","placement":"header"}`,
+			yaml: "{name: Docs, url: https://perses.dev, placement: header}",
+			want: Link{Name: "Docs", URL: "https://perses.dev", Placement: LinkPlacementHeader},
+		},
+		{
+			name: "data placement",
+			json: `{"url":"https://perses.dev?var-job=${job}","placement":"data"}`,
+			yaml: "{url: 'https://perses.dev?var-job=${job}', placement: data}",
+			want: Link{URL: "https://perses.dev?var-job=${job}", Placement: LinkPlacementData},
+		},
+		{
+			name: "data tag placement",
+			json: `{"name":"Traffic","tags":["traffic"],"placement":"data"}`,
+			yaml: "{name: Traffic, tags: [traffic], placement: data}",
+			want: Link{Name: "Traffic", Tags: []string{"traffic"}, Placement: LinkPlacementData},
+		},
+		{
+			name:    "unknown placement",
+			json:    `{"url":"https://perses.dev","placement":"panel"}`,
+			yaml:    "{url: https://perses.dev, placement: panel}",
+			wantErr: `unknown link.placement "panel" used`,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

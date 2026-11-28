@@ -11,12 +11,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+/** header is the panel or dashboard menu. data is bound to a category, a series, or a field. */
+export type LinkPlacement = 'header' | 'data';
+
 interface LinkBase {
   tooltip?: string;
   /** Copy the current time range. Applies to a URL and to a tag menu. */
   keepTime?: boolean;
   /** Copy variables. A URL receives every current variable. A tag menu receives those the destination declares. */
   includeVariables?: boolean;
+  /** Where the link is drawn. Omitted means the header menu. */
+  placement?: LinkPlacement;
 }
 
 /** url is present, possibly empty. tags is absent. An empty URL is a placeholder stored before tag links. */
