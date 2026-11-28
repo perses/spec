@@ -11,3 +11,14 @@ package dashboard
 // RenderVariables only interpolates $var inside a URL, so a tag menu cannot set it.
 // Placement chooses the header menu or a data anchor. Empty means the header menu.
 #Link: _
+
+// LinkPlacement says where a link is drawn.
+// header is the panel or dashboard menu. data is bound to a category, a series, or a field.
+#LinkPlacement: string // #enumLinkPlacement
+
+#enumLinkPlacement:
+	#LinkPlacementHeader |
+	#LinkPlacementData
+
+#LinkPlacementHeader: #LinkPlacement & "header"
+#LinkPlacementData:   #LinkPlacement & "data"
